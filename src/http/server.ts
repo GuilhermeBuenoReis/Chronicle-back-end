@@ -1,5 +1,6 @@
 import fastify from 'fastify';
 import {
+  jsonSchemaTransform,
   serializerCompiler,
   validatorCompiler,
   type ZodTypeProvider,
@@ -9,7 +10,9 @@ import { createGoalsRoute } from '../routes/craete-goals-route';
 import { createGoalCompletionRoute } from '../routes/create-goals-completions-route';
 import { getWeekPendingGoalsRoute } from '../routes/get-pending-goals-router';
 import { getWeekSummaryRoute } from '../routes/get-week-summary-route';
-import fastifyCors from '@fastify/cors';
+import { fastifyCors } from '@fastify/cors';
+import { fastifySwagger } from '@fastify/swagger';
+import { fastifySwaggerUi } from '@fastify/swagger-ui';
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -19,6 +22,20 @@ app.register(fastifyCors, {
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
+
+app.register(fastifySwagger, {
+  openapi: {
+    info: {
+      title: 'in-orbit',
+      version: '1.0.0',
+    },
+  },
+  transform: jsonSchemaTransform,
+});
+
+app.register(fastifySwaggerUi, {
+  routePrefix: '/docs',
+});
 
 app.register(createGoalsRoute);
 app.register(createGoalCompletionRoute);
