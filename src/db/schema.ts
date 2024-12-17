@@ -8,6 +8,7 @@ export const users = pgTable('users', {
   name: text('name'),
   email: text('email'),
   avatarUrl: text('avatar_url').notNull(),
+  experience: integer().notNull().default(0),
   externalAcountId: integer('exeternal_acount_id').notNull().unique(),
 });
 
