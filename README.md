@@ -126,10 +126,10 @@ npm run test:watch
 ## 📧 **Contato**
 
 Caso tenha dúvidas ou sugestões, entre em contato pelo e-mail:  
-**[guilhermebuenoreis@gmail.com**
+**guilhermebuenoreis@gmail.com**
 
 ---
 
-**Feito por [Guilherme Bueno]**  
+**Feito por Guilherme Bueno**  
 
 --- 
