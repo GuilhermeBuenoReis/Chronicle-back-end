@@ -22,6 +22,8 @@ import { resolve } from 'node:path';
 import { writeFile } from 'node:fs/promises';
 import { CreateFoldersRoute } from '../routes/create-folder-route';
 import { CreateUserRoute } from '../routes/create-user-route';
+import { getUserByEmailAndPasswordRoute } from '../routes/find-user-by-email-and-password-route';
+import { AuthenticateUserRoute } from '../routes/authenticate-user-route';
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -59,6 +61,8 @@ app.register(getProfileRoute);
 app.register(getUserLevelAndExperienceRoute);
 app.register(CreateFoldersRoute);
 app.register(CreateUserRoute);
+app.register(getUserByEmailAndPasswordRoute);
+app.register(AuthenticateUserRoute);
 
 app
   .listen({

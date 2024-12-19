@@ -14,6 +14,7 @@ export const users = pgTable('users', {
     .$defaultFn(() => createId()),
   name: text('name'),
   email: text('email'),
+  password: text('password'),
   avatarUrl: text('avatar_url').notNull(),
   experience: integer().notNull().default(0),
   externalAcountId: integer('exeternal_acount_id').unique(),

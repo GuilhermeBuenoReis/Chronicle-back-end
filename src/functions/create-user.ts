@@ -5,17 +5,20 @@ interface CreateUserRequest {
   name: string;
   email: string;
   avatarUrl: string;
+  password: string;
 }
 export async function CreateUser({
   name,
   avatarUrl,
   email,
+  password,
 }: CreateUserRequest) {
   const result = await db
     .insert(users)
     .values({
       name,
       email,
+      password,
       avatarUrl,
     })
     .returning();

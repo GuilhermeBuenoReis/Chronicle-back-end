@@ -444,6 +444,9 @@
                   "name": {
                     "type": "string"
                   },
+                  "password": {
+                    "type": "string"
+                  },
                   "avatarUrl": {
                     "type": "string"
                   }
@@ -451,6 +454,7 @@
                 "required": [
                   "email",
                   "name",
+                  "password",
                   "avatarUrl"
                 ],
                 "additionalProperties": false
@@ -469,6 +473,108 @@
                     "null"
                   ],
                   "nullable": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/find": {
+      "post": {
+        "operationId": "getUserByEmailAndPassword",
+        "tags": [
+          "user",
+          "auth"
+        ],
+        "description": "Get user by email and passowrd",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "enum": [
+                    "null"
+                  ],
+                  "nullable": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/authenticate": {
+      "post": {
+        "operationId": "AuthenticateUserRoute",
+        "tags": [
+          "user",
+          "auth"
+        ],
+        "description": "Authenticate user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "token"
+                  ],
+                  "additionalProperties": false
                 }
               }
             }

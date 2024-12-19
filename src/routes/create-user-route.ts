@@ -1,13 +1,11 @@
 import { z } from 'zod';
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
-import { authenticateUserHook } from '../http/hooks/authenticate-user';
 import { CreateUser } from '../functions/create-user';
 
 export const CreateUserRoute: FastifyPluginAsyncZod = async app => {
   app.post(
     '/user',
     {
-      onRequest: [authenticateUserHook],
       schema: {
         operationId: 'CreateUser',
         tags: ['folder'],
@@ -15,6 +13,7 @@ export const CreateUserRoute: FastifyPluginAsyncZod = async app => {
         body: z.object({
           email: z.string(),
           name: z.string(),
+          password: z.string(),
           avatarUrl: z.string(),
         }),
         response: {
@@ -23,11 +22,12 @@ export const CreateUserRoute: FastifyPluginAsyncZod = async app => {
       },
     },
     async (request, reply) => {
-      const { name, email, avatarUrl } = request.body;
+      const { name, email, avatarUrl, password } = request.body;
 
       await CreateUser({
         name,
         email,
+        password,
         avatarUrl,
       });
 
