@@ -1,4 +1,11 @@
-import { pgTable, text, integer, timestamp } from 'drizzle-orm/pg-core';
+import {
+  pgTable,
+  text,
+  integer,
+  timestamp,
+  json,
+  boolean,
+} from 'drizzle-orm/pg-core';
 import { createId } from '@paralleldrive/cuid2';
 
 export const users = pgTable('users', {
@@ -9,7 +16,7 @@ export const users = pgTable('users', {
   email: text('email'),
   avatarUrl: text('avatar_url').notNull(),
   experience: integer().notNull().default(0),
-  externalAcountId: integer('exeternal_acount_id').notNull().unique(),
+  externalAcountId: integer('exeternal_acount_id').unique(),
 });
 
 export const goals = pgTable('goals', {
@@ -35,6 +42,58 @@ export const goalCompletions = pgTable('goal_completions', {
     .notNull(),
 
   createAt: timestamp('created_at', { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+export const folders = pgTable('folder', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  name: text('name').notNull(),
+  createAt: timestamp('created_at', { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  userId: text('user_id')
+    .references(() => users.id)
+    .notNull(),
+});
+
+export const notes = pgTable('notes', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  title: text('title').notNull(),
+  content: text('content').notNull(),
+  folder_id: text('folder_id').references(() => folders.id),
+  userId: text('user_id')
+    .references(() => users.id)
+    .notNull(),
+  tags: json().$type<string[]>(),
+
+  createAt: timestamp('created_at', { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+export const tasks = pgTable('tasks', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  title: text('title').notNull(),
+  content: text('content').notNull(),
+  is_completed: boolean().default(false),
+  noteId: text('note_id').references(() => notes.id),
+  createAt: timestamp('created_at', { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true })
     .notNull()
     .defaultNow(),
 });

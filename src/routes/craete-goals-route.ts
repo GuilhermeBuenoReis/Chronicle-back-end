@@ -9,6 +9,7 @@ export const createGoalsRoute: FastifyPluginAsyncZod = async app => {
     {
       onRequest: [authenticateUserHook],
       schema: {
+        operationId: 'createGoals',
         tags: ['goals'],
         description: 'Create a goal',
         body: z.object({

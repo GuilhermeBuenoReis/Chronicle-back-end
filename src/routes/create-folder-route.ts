@@ -1,19 +1,20 @@
 import { z } from 'zod';
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
-import { createGoalCompletion } from '../functions/create-goal-completion';
 import { authenticateUserHook } from '../http/hooks/authenticate-user';
+import { CreateFolder } from '../functions/create-folder';
 
-export const createGoalCompletionRoute: FastifyPluginAsyncZod = async app => {
+export const CreateFoldersRoute: FastifyPluginAsyncZod = async app => {
   app.post(
-    '/completions',
+    '/folder',
     {
       onRequest: [authenticateUserHook],
       schema: {
-        operationId: 'createGoalCompletion',
-        tags: ['goals'],
-        description: 'Complete a goal',
+        operationId: 'CreateFolders',
+        tags: ['folder'],
+        description: 'Create a folder',
         body: z.object({
-          goalId: z.string(),
+          userId: z.string(),
+          name: z.string(),
         }),
         response: {
           201: z.null(),
@@ -21,12 +22,12 @@ export const createGoalCompletionRoute: FastifyPluginAsyncZod = async app => {
       },
     },
     async (request, reply) => {
-      const userId = request.user.sub;
-      const { goalId } = request.body;
+      // const userId = request.user.sub;
+      const { name, userId } = request.body;
 
-      await createGoalCompletion({
+      await CreateFolder({
         userId,
-        goalId,
+        name,
       });
 
       return reply.status(201).send();

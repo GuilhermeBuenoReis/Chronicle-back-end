@@ -18,6 +18,10 @@ import fastifyJwt from '@fastify/jwt';
 import { env } from '../env';
 import { getProfileRoute } from '../routes/get-profile-route';
 import { getUserLevelAndExperienceRoute } from '../routes/get-user-level-and-experience-route';
+import { resolve } from 'node:path';
+import { writeFile } from 'node:fs/promises';
+import { CreateFoldersRoute } from '../routes/create-folder-route';
+import { CreateUserRoute } from '../routes/create-user-route';
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -25,12 +29,12 @@ app.register(fastifyCors, {
   origin: '*',
 });
 
+app.setValidatorCompiler(validatorCompiler);
+app.setSerializerCompiler(serializerCompiler);
+
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
 });
-
-app.setValidatorCompiler(validatorCompiler);
-app.setSerializerCompiler(serializerCompiler);
 
 app.register(fastifySwagger, {
   openapi: {
@@ -53,6 +57,8 @@ app.register(getWeekSummaryRoute);
 app.register(authenticateFromGithubRoute);
 app.register(getProfileRoute);
 app.register(getUserLevelAndExperienceRoute);
+app.register(CreateFoldersRoute);
+app.register(CreateUserRoute);
 
 app
   .listen({
@@ -62,3 +68,15 @@ app
   .then(() => {
     console.log('Http server running 🚀🚀');
   });
+
+if (env.NODE_ENV === 'development') {
+  const specFile = resolve(__dirname, '../../swagger.json');
+
+  app.ready().then(() => {
+    const spec = JSON.stringify(app.swagger(), null, 2);
+
+    writeFile(specFile, spec).then(() => {
+      console.log('Swagger spec generated!');
+    });
+  });
+}

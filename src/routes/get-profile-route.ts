@@ -1,5 +1,4 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
-import { getWeekPendingGoals } from '../functions/get-week-pending-goals';
 import z from 'zod';
 import { authenticateUserHook } from '../http/hooks/authenticate-user';
 import { getUser } from '../functions/get-user';
@@ -10,6 +9,7 @@ export const getProfileRoute: FastifyPluginAsyncZod = async app => {
     {
       onRequest: [authenticateUserHook],
       schema: {
+        operationId: 'getProfile',
         tags: ['user'],
         description: 'Get user profile',
         response: {
