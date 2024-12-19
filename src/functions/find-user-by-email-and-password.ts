@@ -22,6 +22,10 @@ export async function getUserByEmailAndPassword({
 
   const user = result[0];
 
+  if (!user) {
+    throw new Error('User not found');
+  }
+
   return {
     user,
   };

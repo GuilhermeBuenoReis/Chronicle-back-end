@@ -12,21 +12,12 @@ export async function makeUser(
     .values({
       name: faker.person.fullName(),
       email: faker.internet.email(),
+      password: faker.internet.password(),
       avatarUrl: faker.image.avatarGitHub(),
       externalAcountId: faker.number.int({ min: 1, max: 1_000_000 }),
       ...override,
     })
     .returning();
-
-  const userData = {
-    name: faker.person.fullName(),
-    email: faker.internet.email(),
-    avatarUrl: faker.image.avatarGitHub(),
-    externalAcountId: faker.number.int({ min: 1, max: 1_000_000 }),
-    ...override,
-  };
-
-  console.log('Final user data:', userData);
 
   return row;
 }
