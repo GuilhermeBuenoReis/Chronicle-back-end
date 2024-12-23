@@ -64,6 +64,48 @@
       "when": 1734638649771,
       "tag": "0008_jazzy_dakota_north",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1734795360818,
+      "tag": "0009_sparkling_ted_forrester",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1734795705158,
+      "tag": "0010_sloppy_karnak",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1734796052580,
+      "tag": "0011_serious_patriot",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1734987793938,
+      "tag": "0012_motionless_infant_terrible",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1734987916998,
+      "tag": "0013_slim_lethal_legion",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1734988557151,
+      "tag": "0014_public_wolverine",
+      "breakpoints": true
     }
   ]
 }

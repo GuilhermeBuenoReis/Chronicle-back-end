@@ -70,12 +70,12 @@ export const notes = pgTable('notes', {
   title: text('title').notNull(),
   content: text('content').notNull(),
   folder_id: text('folder_id').references(() => folders.id),
+  tags: text('tags'),
   userId: text('user_id')
     .references(() => users.id)
     .notNull(),
-  tags: json().$type<string[]>(),
 
-  createAt: timestamp('created_at', { withTimezone: true })
+  createdAt: timestamp('created_at', { withTimezone: true })
     .notNull()
     .defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true })

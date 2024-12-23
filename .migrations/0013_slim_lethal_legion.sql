@@ -1,0 +1,1 @@
+ALTER TABLE "tags" ADD COLUMN "title" text NOT NULL;

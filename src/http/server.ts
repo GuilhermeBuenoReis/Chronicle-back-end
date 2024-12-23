@@ -24,6 +24,9 @@ import { CreateFoldersRoute } from '../routes/create-folder-route';
 import { CreateUserRoute } from '../routes/create-user-route';
 import { getUserByEmailAndPasswordRoute } from '../routes/find-user-by-email-and-password-route';
 import { AuthenticateUserRoute } from '../routes/authenticate-user-route';
+import { CreateNoteRoute } from '../routes/create-note-router';
+import { getNotesRoute } from '../routes/get-notes-route';
+import { findNotesByTags } from '../routes/find-notes-by-tag-route';
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -63,6 +66,9 @@ app.register(CreateFoldersRoute);
 app.register(CreateUserRoute);
 app.register(getUserByEmailAndPasswordRoute);
 app.register(AuthenticateUserRoute);
+app.register(CreateNoteRoute);
+app.register(getNotesRoute);
+app.register(findNotesByTags);
 
 app
   .listen({
