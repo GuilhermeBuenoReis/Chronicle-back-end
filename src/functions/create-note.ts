@@ -4,7 +4,7 @@ import { notes } from '../db/schema';
 interface CreateNoteRequest {
   title: string;
   content: string;
-  tags?: string;
+  tags?: string | null;
   folderId?: string;
   userId: string;
 }
