@@ -3,7 +3,7 @@ import z from 'zod';
 import { getUserByEmailAndPassword } from '../functions/find-user-by-email-and-password';
 import { FindNoteByTag } from '../functions/find-note-by-tag';
 
-export const findNotesByTags: FastifyPluginAsyncZod = async app => {
+export const findNotesByTagsRoute: FastifyPluginAsyncZod = async app => {
   app.post(
     '/notes/find',
     {
