@@ -1,6 +1,6 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import z from 'zod';
-import { getNote } from '../functions/get-week-notes';
+import { getNotes } from '../functions/get-notes';
 
 export const getNotesRoute: FastifyPluginAsyncZod = async app => {
   app.get(
@@ -25,7 +25,7 @@ export const getNotesRoute: FastifyPluginAsyncZod = async app => {
     },
     async (request, reply) => {
       const userId = 'n6u53804o7fjhg08tit8csc1';
-      const { result } = await getNote({ userId });
+      const { result } = await getNotes({ userId });
 
       return reply.status(200).send(result);
     }

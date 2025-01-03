@@ -5,6 +5,7 @@ import {
   timestamp,
   json,
   boolean,
+  bigint,
 } from 'drizzle-orm/pg-core';
 import { createId } from '@paralleldrive/cuid2';
 

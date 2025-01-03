@@ -1,13 +1,12 @@
-import dayjs from 'dayjs';
+import { eq } from 'drizzle-orm';
 import { db } from '../db';
 import { notes } from '../db/schema';
-import { and, eq, gte, lte, sql } from 'drizzle-orm';
 
-interface getNoteRequest {
-  userId: string;
+interface FindNoteByIdRequest {
+  noteId: string;
 }
 
-export async function getNote({ userId }: getNoteRequest) {
+export async function findNoteById({ noteId }: FindNoteByIdRequest) {
   const result = await db
     .select({
       id: notes.id,
@@ -17,9 +16,11 @@ export async function getNote({ userId }: getNoteRequest) {
       createdAt: notes.createdAt,
     })
     .from(notes)
-    .where(eq(notes.userId, userId));
+    .where(eq(notes.id, noteId));
+
+  const note = result[0];
 
   return {
-    result,
+    note,
   };
 }

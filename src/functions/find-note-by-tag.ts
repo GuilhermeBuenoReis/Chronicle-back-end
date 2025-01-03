@@ -1,6 +1,6 @@
 import { and, eq, isNotNull } from 'drizzle-orm';
 import { db } from '../db';
-import { notes, users } from '../db/schema';
+import { notes } from '../db/schema';
 
 interface FidnNoteByTagRequest {
   tags: string;

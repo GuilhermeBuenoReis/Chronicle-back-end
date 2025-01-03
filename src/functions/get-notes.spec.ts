@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getNote } from './get-week-notes';
+import { getNotes } from './get-notes';
 import { makeUser } from '../../test/factories/make-user';
 import { db } from '../db';
 import { notes } from '../db/schema';
@@ -18,7 +18,7 @@ describe('get notes', () => {
       userId: user.id,
     });
 
-    const { result } = await getNote({ userId: user.id });
+    const { result } = await getNotes({ userId: user.id });
 
     expect(result).toEqual(
       expect.arrayContaining([

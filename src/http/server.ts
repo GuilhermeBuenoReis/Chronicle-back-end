@@ -27,6 +27,7 @@ import { AuthenticateUserRoute } from '../routes/authenticate-user-route';
 import { CreateNoteRoute } from '../routes/create-note-router';
 import { getNotesRoute } from '../routes/get-notes-route';
 import { findNotesByTagsRoute } from '../routes/find-notes-by-tag-route';
+import { findNotesByIdRoute } from '../routes/find-note-by-id-route';
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -69,6 +70,7 @@ app.register(AuthenticateUserRoute);
 app.register(CreateNoteRoute);
 app.register(getNotesRoute);
 app.register(findNotesByTagsRoute);
+app.register(findNotesByIdRoute);
 
 app
   .listen({
