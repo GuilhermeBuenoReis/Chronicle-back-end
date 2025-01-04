@@ -1,11 +1,10 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import z from 'zod';
-import { findNoteById } from '../functions/find-note-by-id';
 import { updateNoteById } from '../functions/update-note-by-id';
 
 export const updatedNoteRoute: FastifyPluginAsyncZod = async app => {
   app.put(
-    '/notes/:id',
+    '/notes/update/:id',
     {
       schema: {
         operationId: 'updatedNote',

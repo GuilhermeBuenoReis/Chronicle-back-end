@@ -29,6 +29,7 @@ import { getNotesRoute } from '../routes/get-notes-route';
 import { findNotesByTagsRoute } from '../routes/find-notes-by-tag-route';
 import { findNotesByIdRoute } from '../routes/find-note-by-id-route';
 import { updatedNoteRoute } from '../routes/update-note-route';
+import { deleteNoteByIdRoute } from '../routes/delete-note-by-id-route';
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -73,6 +74,7 @@ app.register(getNotesRoute);
 app.register(findNotesByTagsRoute);
 app.register(findNotesByIdRoute);
 app.register(updatedNoteRoute);
+app.register(deleteNoteByIdRoute);
 
 app
   .listen({
