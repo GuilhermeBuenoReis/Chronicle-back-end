@@ -7,6 +7,7 @@ describe('create user', () => {
       name: 'Guilherme',
       avatarUrl: 'https://github.com/guilhermebuenoreis.png',
       email: 'email@test.com',
+      password: '123456',
     });
 
     expect(result).toEqual({
@@ -14,6 +15,7 @@ describe('create user', () => {
         id: expect.any(String),
         name: 'Guilherme',
         email: 'email@test.com',
+        password: '123456',
         avatarUrl: expect.any(String),
       }),
     });
