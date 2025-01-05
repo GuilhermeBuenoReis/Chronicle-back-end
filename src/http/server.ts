@@ -30,6 +30,11 @@ import { findNotesByTagsRoute } from '../routes/find-notes-by-tag-route';
 import { findNotesByIdRoute } from '../routes/find-note-by-id-route';
 import { updatedNoteRoute } from '../routes/update-note-route';
 import { deleteNoteByIdRoute } from '../routes/delete-note-by-id-route';
+import { createTaskRoute } from '../routes/create-taks-route';
+import { getTaskRoute } from '../routes/get-task-route';
+import { updateTaskById } from '../functions/update-task-by-id';
+import { updatedTaskRoute } from '../routes/update-task-by-id-route';
+import { deleteTaskByIdRoute } from '../routes/delete-task-by-id-route';
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -75,6 +80,10 @@ app.register(findNotesByTagsRoute);
 app.register(findNotesByIdRoute);
 app.register(updatedNoteRoute);
 app.register(deleteNoteByIdRoute);
+app.register(createTaskRoute);
+app.register(getTaskRoute);
+app.register(updatedTaskRoute);
+app.register(deleteTaskByIdRoute);
 
 app
   .listen({

@@ -91,7 +91,9 @@ export const tasks = pgTable('tasks', {
   title: text('title').notNull(),
   content: text('content').notNull(),
   is_completed: boolean().default(false),
-  noteId: text('note_id').references(() => notes.id),
+  userId: text('user_id')
+    .references(() => users.id)
+    .notNull(),
   createAt: timestamp('created_at', { withTimezone: true })
     .notNull()
     .defaultNow(),
