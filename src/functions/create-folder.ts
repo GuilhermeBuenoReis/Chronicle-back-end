@@ -15,7 +15,6 @@ export async function CreateFolder({ name, userId }: CreateFolderRequest) {
     .returning();
 
   const folder = result;
-  console.log(folder);
 
   return {
     folder: {

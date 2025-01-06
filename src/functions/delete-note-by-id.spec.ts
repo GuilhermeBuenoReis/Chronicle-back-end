@@ -15,7 +15,7 @@ describe('delete note by id', () => {
       content: note.content,
     });
 
-    const result = await deleteNoteById({
+    await deleteNoteById({
       noteId: note.id,
     });
 

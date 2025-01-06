@@ -32,6 +32,10 @@ export async function updateTaskById({
 
   const updatedTask = result[0];
 
+  if (!updateTaskById) {
+    throw new Error('Erro ao atualizar a tarefa!');
+  }
+
   return {
     updatedTask,
   };

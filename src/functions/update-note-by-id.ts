@@ -36,6 +36,10 @@ export async function updateNoteById({
 
   const updatedNote = result[0];
 
+  if (!updateNoteById) {
+    throw new Error('Erro ao atualizar a nota!');
+  }
+
   console.log('Updated Note:', updatedNote);
 
   return {

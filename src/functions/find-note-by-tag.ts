@@ -23,6 +23,10 @@ export async function FindNoteByTag({ tags }: FidnNoteByTagRequest) {
     tag: note.tag ?? '',
   }));
 
+  if (notesWithNonNullTags.length === 0) {
+    throw new Error('Nenhuma nota encontrada com esta tag!');
+  }
+
   return {
     note: notesWithNonNullTags.length > 0 ? notesWithNonNullTags : [],
   };

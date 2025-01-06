@@ -18,6 +18,10 @@ export async function getTasks({ userId }: GetTaskRequest) {
     .from(tasks)
     .where(eq(tasks.userId, userId));
 
+  if (!result) {
+    throw new Error('Nenhuma tarefa cadastrada!');
+  }
+
   return {
     result,
   };

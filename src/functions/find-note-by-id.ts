@@ -20,6 +20,10 @@ export async function findNoteById({ noteId }: FindNoteByIdRequest) {
 
   const note = result[0];
 
+  if (!note) {
+    throw new Error('Nota não encontrada!');
+  }
+
   return {
     note,
   };

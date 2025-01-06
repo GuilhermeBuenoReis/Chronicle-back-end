@@ -18,6 +18,10 @@ export async function getNotes({ userId }: GetNotesRequest) {
     .from(notes)
     .where(eq(notes.userId, userId));
 
+  if (!result) {
+    throw new Error('Nenhuma nota cadastrada!');
+  }
+
   return {
     result,
   };
