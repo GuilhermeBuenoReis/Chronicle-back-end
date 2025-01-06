@@ -19,19 +19,19 @@ describe('update user by Id', () => {
 
     const result = await updateUser({
       userId: user.id,
-      name: user.name,
-      email: user.name,
-      password: user.password,
-      avatarUrl: user.avatarUrl,
+      name: 'Jhon Doe',
+      email: 'Jhondoe@gmail.cm',
+      password: '12345678',
+      avatarUrl: 'http://github.com/guilhermebuenoreis.png',
     });
 
     expect(result.userUpdate).toEqual(
       expect.objectContaining({
-        userId: user.id,
-        name: user.name,
-        email: user.name,
-        password: user.password,
-        avatarUrl: user.avatarUrl,
+        id: user.id,
+        name: 'Jhon Doe',
+        email: 'Jhondoe@gmail.cm',
+        password: '12345678',
+        avatarUrl: 'http://github.com/guilhermebuenoreis.png',
       })
     );
   });
