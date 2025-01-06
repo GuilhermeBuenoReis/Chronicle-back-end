@@ -2,10 +2,10 @@ import { db } from '../db';
 import { users } from '../db/schema';
 
 interface CreateUserRequest {
-  name: string;
-  email: string;
+  name: string | null;
+  email: string | null;
+  password: string | null;
   avatarUrl: string;
-  password: string;
 }
 export async function CreateUser({
   name,
