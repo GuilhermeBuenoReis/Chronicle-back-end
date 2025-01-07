@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "build": "tsup src/http/server.ts --format cjs,esm --dts --sourcemap",
     "dev": "tsx watch --env-file=.env src/http/server.ts",
     "seed": "tsx --env-file=.env src/db/seed.ts",
     "pretest": "npm run db:migrate:test",
@@ -22,6 +23,7 @@
     "@types/node": "^22.10.2",
     "dotenv-cli": "^7.4.4",
     "drizzle-kit": "^0.30.1",
+    "tsup": "^8.3.5",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   },
