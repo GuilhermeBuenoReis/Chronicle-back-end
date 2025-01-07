@@ -138,12 +138,22 @@ async function CreateNote({
   };
 }
 
+// src/http/hooks/authenticate-user.ts
+async function authenticateUserHook(request, reply) {
+  try {
+    await request.jwtVerify();
+  } catch (error) {
+    return reply.status(401).send({ message: "Unauthorized" });
+  }
+}
+
 // src/routes/create-note-router.ts
 var CreateNoteRoute = async (app) => {
   app.post(
     "/note",
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: "CreateNote",
         tags: ["note"],
         description: "Create a folder",

@@ -137,13 +137,23 @@ async function getTasks({ userId }) {
   };
 }
 
+// src/http/hooks/authenticate-user.ts
+async function authenticateUserHook(request, reply) {
+  try {
+    await request.jwtVerify();
+  } catch (error) {
+    return reply.status(401).send({ message: "Unauthorized" });
+  }
+}
+
 // src/routes/get-task-route.ts
 var getTaskRoute = async (app) => {
   app.get(
     "/task/summary",
     {
       schema: {
-        operationId: "getNotesRoute",
+        onRequest: [authenticateUserHook],
+        operationId: "getTasksRoute",
         tags: ["task"],
         description: "Get tasks",
         response: {

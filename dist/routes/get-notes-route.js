@@ -137,12 +137,22 @@ async function getNotes({ userId }) {
   };
 }
 
+// src/http/hooks/authenticate-user.ts
+async function authenticateUserHook(request, reply) {
+  try {
+    await request.jwtVerify();
+  } catch (error) {
+    return reply.status(401).send({ message: "Unauthorized" });
+  }
+}
+
 // src/routes/get-notes-route.ts
 var getNotesRoute = async (app) => {
   app.get(
     "/notes/summary",
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: "getNotesRoute",
         tags: ["notes"],
         description: "Get week summary notes",

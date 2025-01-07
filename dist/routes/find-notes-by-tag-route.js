@@ -141,13 +141,23 @@ async function FindNoteByTag({ tags }) {
   };
 }
 
+// src/http/hooks/authenticate-user.ts
+async function authenticateUserHook(request, reply) {
+  try {
+    await request.jwtVerify();
+  } catch (error) {
+    return reply.status(401).send({ message: "Unauthorized" });
+  }
+}
+
 // src/routes/find-notes-by-tag-route.ts
 var findNotesByTagsRoute = async (app) => {
   app.post(
     "/notes/find",
     {
       schema: {
-        operationId: "getUserByEmailAndPassword",
+        onRequest: [authenticateUserHook],
+        operationId: "findNotesByTags",
         tags: ["notes", "tags"],
         description: "Get user by email and passowrd",
         body: import_zod2.default.object({

@@ -11,7 +11,7 @@ export const findNotesByTagsRoute: FastifyPluginAsyncZod = async app => {
       schema: {
         onRequest: [authenticateUserHook],
 
-        operationId: 'getUserByEmailAndPassword',
+        operationId: 'findNotesByTags',
         tags: ['notes', 'tags'],
         description: 'Get user by email and passowrd',
         body: z.object({

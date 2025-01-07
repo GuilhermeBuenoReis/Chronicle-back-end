@@ -141,12 +141,22 @@ async function updateTaskById({
   };
 }
 
+// src/http/hooks/authenticate-user.ts
+async function authenticateUserHook(request, reply) {
+  try {
+    await request.jwtVerify();
+  } catch (error) {
+    return reply.status(401).send({ message: "Unauthorized" });
+  }
+}
+
 // src/routes/update-task-by-id-route.ts
 var updatedTaskRoute = async (app) => {
   app.put(
     "/task/update/:id",
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: "updatedTask",
         tags: ["task"],
         description: "updated task",

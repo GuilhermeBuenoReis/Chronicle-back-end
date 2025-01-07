@@ -35,6 +35,15 @@ __export(create_folder_route_exports, {
 module.exports = __toCommonJS(create_folder_route_exports);
 var import_zod2 = require("zod");
 
+// src/http/hooks/authenticate-user.ts
+async function authenticateUserHook(request, reply) {
+  try {
+    await request.jwtVerify();
+  } catch (error) {
+    return reply.status(401).send({ message: "Unauthorized" });
+  }
+}
+
 // src/db/index.ts
 var import_postgres_js = require("drizzle-orm/postgres-js");
 var import_postgres = __toESM(require("postgres"));
@@ -137,6 +146,7 @@ var CreateFoldersRoute = async (app) => {
     "/folder",
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: "CreateFolders",
         tags: ["folder"],
         description: "Create a folder",

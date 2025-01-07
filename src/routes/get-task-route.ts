@@ -9,7 +9,7 @@ export const getTaskRoute: FastifyPluginAsyncZod = async app => {
     {
       schema: {
         onRequest: [authenticateUserHook],
-        operationId: 'getNotesRoute',
+        operationId: 'getTasksRoute',
         tags: ['task'],
         description: 'Get tasks',
         response: {

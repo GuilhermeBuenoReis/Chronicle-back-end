@@ -128,12 +128,21 @@ async function deleteNoteById({ noteId }) {
   };
 }
 
+// src/http/hooks/authenticate-user.ts
+async function authenticateUserHook(request, reply) {
+  try {
+    await request.jwtVerify();
+  } catch (error) {
+    return reply.status(401).send({ message: "Unauthorized" });
+  }
+}
+
 // src/routes/delete-note-by-id-route.ts
 var deleteNoteByIdRoute = async (app) => {
   app.delete(
     "/notes/delete/:id",
     {
-      // onRequest: [authenticateUserHook],
+      onRequest: [authenticateUserHook],
       schema: {
         operationId: "deleteNoteById",
         tags: ["goals"],

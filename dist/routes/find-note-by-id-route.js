@@ -138,12 +138,22 @@ async function findNoteById({ noteId }) {
   };
 }
 
+// src/http/hooks/authenticate-user.ts
+async function authenticateUserHook(request, reply) {
+  try {
+    await request.jwtVerify();
+  } catch (error) {
+    return reply.status(401).send({ message: "Unauthorized" });
+  }
+}
+
 // src/routes/find-note-by-id-route.ts
 var findNotesByIdRoute = async (app) => {
   app.get(
     "/notes/:id",
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: "findNotesById",
         tags: ["notes", "tags"],
         description: "Find notes by id",

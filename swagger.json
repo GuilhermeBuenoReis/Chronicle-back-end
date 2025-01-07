@@ -692,7 +692,7 @@
     },
     "/notes/find": {
       "post": {
-        "operationId": "getUserByEmailAndPassword",
+        "operationId": "findNotesByTags",
         "tags": [
           "notes",
           "tags"
@@ -887,8 +887,7 @@
       "put": {
         "operationId": "updatedNote",
         "tags": [
-          "notes",
-          "tags"
+          "notes"
         ],
         "description": "updated note",
         "requestBody": {
@@ -1129,7 +1128,7 @@
     },
     "/task/summary": {
       "get": {
-        "operationId": "getNotesRoute",
+        "operationId": "getTasksRoute",
         "tags": [
           "task"
         ],

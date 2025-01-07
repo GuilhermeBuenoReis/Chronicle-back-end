@@ -128,12 +128,21 @@ async function deleteTaskById({ taskId }) {
   };
 }
 
+// src/http/hooks/authenticate-user.ts
+async function authenticateUserHook(request, reply) {
+  try {
+    await request.jwtVerify();
+  } catch (error) {
+    return reply.status(401).send({ message: "Unauthorized" });
+  }
+}
+
 // src/routes/delete-task-by-id-route.ts
 var deleteTaskByIdRoute = async (app) => {
   app.delete(
     "/task/delete/:id",
     {
-      // onRequest: [authenticateUserHook],
+      onRequest: [authenticateUserHook],
       schema: {
         operationId: "deleteTaskById",
         tags: ["task"],

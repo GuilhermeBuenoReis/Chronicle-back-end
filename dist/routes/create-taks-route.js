@@ -136,12 +136,22 @@ async function CreateTask({
   };
 }
 
+// src/http/hooks/authenticate-user.ts
+async function authenticateUserHook(request, reply) {
+  try {
+    await request.jwtVerify();
+  } catch (error) {
+    return reply.status(401).send({ message: "Unauthorized" });
+  }
+}
+
 // src/routes/create-taks-route.ts
 var createTaskRoute = async (app) => {
   app.post(
     "/task",
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: "Create task",
         tags: ["task"],
         description: "Create a task",

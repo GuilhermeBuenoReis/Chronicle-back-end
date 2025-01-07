@@ -681,6 +681,7 @@ var CreateFoldersRoute = async (app2) => {
     "/folder",
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: "CreateFolders",
         tags: ["folder"],
         description: "Create a folder",
@@ -879,6 +880,7 @@ var CreateNoteRoute = async (app2) => {
     "/note",
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: "CreateNote",
         tags: ["note"],
         description: "Create a folder",
@@ -935,6 +937,7 @@ var getNotesRoute = async (app2) => {
     "/notes/summary",
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: "getNotesRoute",
         tags: ["notes"],
         description: "Get week summary notes",
@@ -990,7 +993,8 @@ var findNotesByTagsRoute = async (app2) => {
     "/notes/find",
     {
       schema: {
-        operationId: "getUserByEmailAndPassword",
+        onRequest: [authenticateUserHook],
+        operationId: "findNotesByTags",
         tags: ["notes", "tags"],
         description: "Get user by email and passowrd",
         body: import_zod15.default.object({
@@ -1053,6 +1057,7 @@ var findNotesByIdRoute = async (app2) => {
     "/notes/:id",
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: "findNotesById",
         tags: ["notes", "tags"],
         description: "Find notes by id",
@@ -1119,8 +1124,9 @@ var updatedNoteRoute = async (app2) => {
     "/notes/update/:id",
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: "updatedNote",
-        tags: ["notes", "tags"],
+        tags: ["notes"],
         description: "updated note",
         querystring: import_zod17.default.object({
           id: import_zod17.default.string()
@@ -1182,7 +1188,7 @@ var deleteNoteByIdRoute = async (app2) => {
   app2.delete(
     "/notes/delete/:id",
     {
-      // onRequest: [authenticateUserHook],
+      onRequest: [authenticateUserHook],
       schema: {
         operationId: "deleteNoteById",
         tags: ["goals"],
@@ -1241,6 +1247,7 @@ var createTaskRoute = async (app2) => {
     "/task",
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: "Create task",
         tags: ["task"],
         description: "Create a task",
@@ -1297,7 +1304,8 @@ var getTaskRoute = async (app2) => {
     "/task/summary",
     {
       schema: {
-        operationId: "getNotesRoute",
+        onRequest: [authenticateUserHook],
+        operationId: "getTasksRoute",
         tags: ["task"],
         description: "Get tasks",
         response: {
@@ -1352,6 +1360,7 @@ var updatedTaskRoute = async (app2) => {
     "/task/update/:id",
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: "updatedTask",
         tags: ["task"],
         description: "updated task",
@@ -1415,7 +1424,7 @@ var deleteTaskByIdRoute = async (app2) => {
   app2.delete(
     "/task/delete/:id",
     {
-      // onRequest: [authenticateUserHook],
+      onRequest: [authenticateUserHook],
       schema: {
         operationId: "deleteTaskById",
         tags: ["task"],

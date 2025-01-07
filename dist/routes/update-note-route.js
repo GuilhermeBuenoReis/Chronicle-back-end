@@ -143,14 +143,24 @@ async function updateNoteById({
   };
 }
 
+// src/http/hooks/authenticate-user.ts
+async function authenticateUserHook(request, reply) {
+  try {
+    await request.jwtVerify();
+  } catch (error) {
+    return reply.status(401).send({ message: "Unauthorized" });
+  }
+}
+
 // src/routes/update-note-route.ts
 var updatedNoteRoute = async (app) => {
   app.put(
     "/notes/update/:id",
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: "updatedNote",
-        tags: ["notes", "tags"],
+        tags: ["notes"],
         description: "updated note",
         querystring: import_zod2.default.object({
           id: import_zod2.default.string()
