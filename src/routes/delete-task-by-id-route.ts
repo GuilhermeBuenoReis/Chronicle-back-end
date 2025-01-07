@@ -2,12 +2,13 @@ import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import z from 'zod';
 import { deleteNoteById } from '../functions/delete-note-by-id';
 import { deleteTaskById } from '../functions/delete-task-by-id';
+import { authenticateUserHook } from '../http/hooks/authenticate-user';
 
 export const deleteTaskByIdRoute: FastifyPluginAsyncZod = async app => {
   app.delete(
     '/task/delete/:id',
     {
-      // onRequest: [authenticateUserHook],
+      onRequest: [authenticateUserHook],
       schema: {
         operationId: 'deleteTaskById',
         tags: ['task'],

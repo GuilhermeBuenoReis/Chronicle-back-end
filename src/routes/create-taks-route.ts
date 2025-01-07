@@ -1,12 +1,14 @@
 import { z } from 'zod';
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import { CreateTask } from '../functions/create-task';
+import { authenticateUserHook } from '../http/hooks/authenticate-user';
 
 export const createTaskRoute: FastifyPluginAsyncZod = async app => {
   app.post(
     '/task',
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: 'Create task',
         tags: ['task'],
         description: 'Create a task',

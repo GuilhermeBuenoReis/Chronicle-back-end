@@ -1,14 +1,16 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import z from 'zod';
 import { updateNoteById } from '../functions/update-note-by-id';
+import { authenticateUserHook } from '../http/hooks/authenticate-user';
 
 export const updatedNoteRoute: FastifyPluginAsyncZod = async app => {
   app.put(
     '/notes/update/:id',
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: 'updatedNote',
-        tags: ['notes', 'tags'],
+        tags: ['notes'],
         description: 'updated note',
         querystring: z.object({
           id: z.string(),

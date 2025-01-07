@@ -8,6 +8,7 @@ export const CreateFoldersRoute: FastifyPluginAsyncZod = async app => {
     '/folder',
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: 'CreateFolders',
         tags: ['folder'],
         description: 'Create a folder',

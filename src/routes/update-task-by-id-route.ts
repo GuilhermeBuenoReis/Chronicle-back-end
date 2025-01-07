@@ -2,12 +2,14 @@ import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import z from 'zod';
 import { updateNoteById } from '../functions/update-note-by-id';
 import { updateTaskById } from '../functions/update-task-by-id';
+import { authenticateUserHook } from '../http/hooks/authenticate-user';
 
 export const updatedTaskRoute: FastifyPluginAsyncZod = async app => {
   app.put(
     '/task/update/:id',
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: 'updatedTask',
         tags: ['task'],
         description: 'updated task',

@@ -2,12 +2,15 @@ import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import z from 'zod';
 import { getUserByEmailAndPassword } from '../functions/find-user-by-email-and-password';
 import { FindNoteByTag } from '../functions/find-note-by-tag';
+import { authenticateUserHook } from '../http/hooks/authenticate-user';
 
 export const findNotesByTagsRoute: FastifyPluginAsyncZod = async app => {
   app.post(
     '/notes/find',
     {
       schema: {
+        onRequest: [authenticateUserHook],
+
         operationId: 'getUserByEmailAndPassword',
         tags: ['notes', 'tags'],
         description: 'Get user by email and passowrd',

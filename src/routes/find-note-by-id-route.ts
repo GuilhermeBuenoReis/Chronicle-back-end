@@ -1,12 +1,14 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import z from 'zod';
 import { findNoteById } from '../functions/find-note-by-id';
+import { authenticateUserHook } from '../http/hooks/authenticate-user';
 
 export const findNotesByIdRoute: FastifyPluginAsyncZod = async app => {
   app.get(
     '/notes/:id',
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: 'findNotesById',
         tags: ['notes', 'tags'],
         description: 'Find notes by id',

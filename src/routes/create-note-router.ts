@@ -1,12 +1,14 @@
 import { z } from 'zod';
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import { CreateNote } from '../functions/create-note';
+import { authenticateUserHook } from '../http/hooks/authenticate-user';
 
 export const CreateNoteRoute: FastifyPluginAsyncZod = async app => {
   app.post(
     '/note',
     {
       schema: {
+        onRequest: [authenticateUserHook],
         operationId: 'CreateNote',
         tags: ['note'],
         description: 'Create a folder',
