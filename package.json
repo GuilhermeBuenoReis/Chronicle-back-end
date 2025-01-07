@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "tsup src/http/server.ts --format cjs,esm --dts --sourcemap",
+    "build": "tsup src",
     "dev": "tsx watch --env-file=.env src/http/server.ts",
+    "start": "node src/http/server.js",
     "seed": "tsx --env-file=.env src/db/seed.ts",
     "pretest": "npm run db:migrate:test",
     "pretest:watch": "npm run db:migrate:test",

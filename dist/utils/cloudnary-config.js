@@ -1,0 +1,58 @@
+"use strict";
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/utils/cloudnary-config.ts
+var cloudnary_config_exports = {};
+__export(cloudnary_config_exports, {
+  cloudinary: () => cloudinary
+});
+module.exports = __toCommonJS(cloudnary_config_exports);
+var import_cloudinary = require("cloudinary");
+
+// src/env.ts
+var import_zod = __toESM(require("zod"));
+var envSchema = import_zod.default.object({
+  NODE_ENV: import_zod.default.enum(["development", "test", "production"]).optional().default("production"),
+  DATABASE_URL: import_zod.default.string().url(),
+  GITHUB_CLIENT_ID: import_zod.default.string(),
+  GITHUB_CLIENT_SECRET: import_zod.default.string(),
+  JWT_SECRET: import_zod.default.string()
+});
+var env = envSchema.parse(process.env);
+
+// src/utils/cloudnary-config.ts
+var cloudinary = import_cloudinary.v2.config({
+  cloud_name: env.CLOUD_NAME,
+  api_key: env.API_KEY_CLOUDNARY,
+  api_secret: env.API_SECRET_CLOUDNARY
+});
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  cloudinary
+});

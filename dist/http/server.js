@@ -1,23 +1,41 @@
+"use strict";
+var __create = Object.create;
 var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __export = (target, all) => {
   for (var name in all)
     __defProp(target, name, { get: all[name], enumerable: true });
 };
+var __copyProps = (to, from, except, desc2) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc2 = __getOwnPropDesc(from, key)) || desc2.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
 
 // src/http/server.ts
-import fastify from "fastify";
-import {
-  jsonSchemaTransform,
-  serializerCompiler,
-  validatorCompiler
-} from "fastify-type-provider-zod";
+var import_fastify = __toESM(require("fastify"));
+var import_fastify_type_provider_zod = require("fastify-type-provider-zod");
 
 // src/routes/craete-goals-route.ts
-import { z as z2 } from "zod";
+var import_zod2 = require("zod");
 
 // src/db/index.ts
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
+var import_postgres_js = require("drizzle-orm/postgres-js");
+var import_postgres = __toESM(require("postgres"));
 
 // src/db/schema.ts
 var schema_exports = {};
@@ -29,76 +47,70 @@ __export(schema_exports, {
   tasks: () => tasks,
   users: () => users
 });
-import {
-  pgTable,
-  text,
-  integer,
-  timestamp,
-  boolean
-} from "drizzle-orm/pg-core";
-import { createId } from "@paralleldrive/cuid2";
-var users = pgTable("users", {
-  id: text("id").primaryKey().$defaultFn(() => createId()),
-  name: text("name"),
-  email: text("email"),
-  password: text("password"),
-  avatarUrl: text("avatar_url").notNull(),
-  experience: integer().notNull().default(0),
-  externalAcountId: integer("exeternal_acount_id").unique()
+var import_pg_core = require("drizzle-orm/pg-core");
+var import_cuid2 = require("@paralleldrive/cuid2");
+var users = (0, import_pg_core.pgTable)("users", {
+  id: (0, import_pg_core.text)("id").primaryKey().$defaultFn(() => (0, import_cuid2.createId)()),
+  name: (0, import_pg_core.text)("name"),
+  email: (0, import_pg_core.text)("email"),
+  password: (0, import_pg_core.text)("password"),
+  avatarUrl: (0, import_pg_core.text)("avatar_url").notNull(),
+  experience: (0, import_pg_core.integer)().notNull().default(0),
+  externalAcountId: (0, import_pg_core.integer)("exeternal_acount_id").unique()
 });
-var goals = pgTable("goals", {
-  id: text("id").primaryKey().$defaultFn(() => createId()),
-  title: text("title").notNull(),
-  userId: text("user_id").references(() => users.id).notNull(),
-  desiredWeeklyFrequency: integer("desired_weekly_frequency").notNull(),
-  createAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+var goals = (0, import_pg_core.pgTable)("goals", {
+  id: (0, import_pg_core.text)("id").primaryKey().$defaultFn(() => (0, import_cuid2.createId)()),
+  title: (0, import_pg_core.text)("title").notNull(),
+  userId: (0, import_pg_core.text)("user_id").references(() => users.id).notNull(),
+  desiredWeeklyFrequency: (0, import_pg_core.integer)("desired_weekly_frequency").notNull(),
+  createAt: (0, import_pg_core.timestamp)("created_at", { withTimezone: true }).notNull().defaultNow()
 });
-var goalCompletions = pgTable("goal_completions", {
-  id: text("id").primaryKey().$defaultFn(() => createId()),
-  goalId: text("goal_id").references(() => goals.id).notNull(),
-  createAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+var goalCompletions = (0, import_pg_core.pgTable)("goal_completions", {
+  id: (0, import_pg_core.text)("id").primaryKey().$defaultFn(() => (0, import_cuid2.createId)()),
+  goalId: (0, import_pg_core.text)("goal_id").references(() => goals.id).notNull(),
+  createAt: (0, import_pg_core.timestamp)("created_at", { withTimezone: true }).notNull().defaultNow()
 });
-var folders = pgTable("folder", {
-  id: text("id").primaryKey().$defaultFn(() => createId()),
-  name: text("name").notNull(),
-  createAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
-  userId: text("user_id").references(() => users.id).notNull()
+var folders = (0, import_pg_core.pgTable)("folder", {
+  id: (0, import_pg_core.text)("id").primaryKey().$defaultFn(() => (0, import_cuid2.createId)()),
+  name: (0, import_pg_core.text)("name").notNull(),
+  createAt: (0, import_pg_core.timestamp)("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: (0, import_pg_core.timestamp)("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  userId: (0, import_pg_core.text)("user_id").references(() => users.id).notNull()
 });
-var notes = pgTable("notes", {
-  id: text("id").primaryKey().$defaultFn(() => createId()),
-  title: text("title").notNull(),
-  content: text("content").notNull(),
-  folder_id: text("folder_id").references(() => folders.id),
-  tags: text("tags"),
-  userId: text("user_id").references(() => users.id).notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow()
+var notes = (0, import_pg_core.pgTable)("notes", {
+  id: (0, import_pg_core.text)("id").primaryKey().$defaultFn(() => (0, import_cuid2.createId)()),
+  title: (0, import_pg_core.text)("title").notNull(),
+  content: (0, import_pg_core.text)("content").notNull(),
+  folder_id: (0, import_pg_core.text)("folder_id").references(() => folders.id),
+  tags: (0, import_pg_core.text)("tags"),
+  userId: (0, import_pg_core.text)("user_id").references(() => users.id).notNull(),
+  createdAt: (0, import_pg_core.timestamp)("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: (0, import_pg_core.timestamp)("updated_at", { withTimezone: true }).notNull().defaultNow()
 });
-var tasks = pgTable("tasks", {
-  id: text("id").primaryKey().$defaultFn(() => createId()),
-  title: text("title").notNull(),
-  content: text("content").notNull(),
-  is_completed: boolean().default(false),
-  userId: text("user_id").references(() => users.id).notNull(),
-  createAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow()
+var tasks = (0, import_pg_core.pgTable)("tasks", {
+  id: (0, import_pg_core.text)("id").primaryKey().$defaultFn(() => (0, import_cuid2.createId)()),
+  title: (0, import_pg_core.text)("title").notNull(),
+  content: (0, import_pg_core.text)("content").notNull(),
+  is_completed: (0, import_pg_core.boolean)().default(false),
+  userId: (0, import_pg_core.text)("user_id").references(() => users.id).notNull(),
+  createAt: (0, import_pg_core.timestamp)("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: (0, import_pg_core.timestamp)("updated_at", { withTimezone: true }).notNull().defaultNow()
 });
 
 // src/env.ts
-import z from "zod";
-var envSchema = z.object({
-  NODE_ENV: z.enum(["development", "test", "production"]).optional().default("production"),
-  DATABASE_URL: z.string().url(),
-  GITHUB_CLIENT_ID: z.string(),
-  GITHUB_CLIENT_SECRET: z.string(),
-  JWT_SECRET: z.string()
+var import_zod = __toESM(require("zod"));
+var envSchema = import_zod.default.object({
+  NODE_ENV: import_zod.default.enum(["development", "test", "production"]).optional().default("production"),
+  DATABASE_URL: import_zod.default.string().url(),
+  GITHUB_CLIENT_ID: import_zod.default.string(),
+  GITHUB_CLIENT_SECRET: import_zod.default.string(),
+  JWT_SECRET: import_zod.default.string()
 });
 var env = envSchema.parse(process.env);
 
 // src/db/index.ts
-var client = postgres(env.DATABASE_URL);
-var db = drizzle(client, {
+var client = (0, import_postgres.default)(env.DATABASE_URL);
+var db = (0, import_postgres_js.drizzle)(client, {
   schema: schema_exports,
   logger: env.NODE_ENV === "development"
 });
@@ -139,12 +151,12 @@ var createGoalsRoute = async (app2) => {
         operationId: "createGoals",
         tags: ["goals"],
         description: "Create a goal",
-        body: z2.object({
-          title: z2.string(),
-          desiredWeeklyFrequency: z2.number().int().min(1).max(7)
+        body: import_zod2.z.object({
+          title: import_zod2.z.string(),
+          desiredWeeklyFrequency: import_zod2.z.number().int().min(1).max(7)
         }),
         response: {
-          201: z2.null()
+          201: import_zod2.z.null()
         }
       }
     },
@@ -162,35 +174,35 @@ var createGoalsRoute = async (app2) => {
 };
 
 // src/routes/create-goals-completions-route.ts
-import { z as z3 } from "zod";
+var import_zod3 = require("zod");
 
 // src/functions/create-goal-completion.ts
-import { count, and, gte, lte, eq, sql } from "drizzle-orm";
-import dayjs from "dayjs";
+var import_drizzle_orm = require("drizzle-orm");
+var import_dayjs = __toESM(require("dayjs"));
 async function createGoalCompletion({
   userId,
   goalId
 }) {
-  const firstDayOfWeek = dayjs().startOf("week").toDate();
-  const lastDayOfWeek = dayjs().endOf("week").toDate();
+  const firstDayOfWeek = (0, import_dayjs.default)().startOf("week").toDate();
+  const lastDayOfWeek = (0, import_dayjs.default)().endOf("week").toDate();
   const goalCompletionsCount = db.$with("goal_completions-counts").as(
     db.select({
       goalId: goalCompletions.goalId,
-      completionCount: count(goalCompletions.id).as("completionCount")
-    }).from(goalCompletions).innerJoin(goals, eq(goals.id, goalCompletions.goalId)).where(
-      and(
-        gte(goalCompletions.createAt, firstDayOfWeek),
-        lte(goalCompletions.createAt, lastDayOfWeek),
-        eq(goals.userId, userId)
+      completionCount: (0, import_drizzle_orm.count)(goalCompletions.id).as("completionCount")
+    }).from(goalCompletions).innerJoin(goals, (0, import_drizzle_orm.eq)(goals.id, goalCompletions.goalId)).where(
+      (0, import_drizzle_orm.and)(
+        (0, import_drizzle_orm.gte)(goalCompletions.createAt, firstDayOfWeek),
+        (0, import_drizzle_orm.lte)(goalCompletions.createAt, lastDayOfWeek),
+        (0, import_drizzle_orm.eq)(goals.userId, userId)
       )
     ).groupBy(goalCompletions.goalId)
   );
   const result = await db.with(goalCompletionsCount).select({
     desiredWeeklyFrequency: goals.desiredWeeklyFrequency,
-    completionCount: sql`
+    completionCount: import_drizzle_orm.sql`
         COALESCE(${goalCompletionsCount.completionCount}, 0)
       `.mapWith(Number)
-  }).from(goals).leftJoin(goalCompletionsCount, eq(goalCompletionsCount.goalId, goals.id)).where(and(eq(goals.id, goalId), eq(goals.userId, userId))).limit(1);
+  }).from(goals).leftJoin(goalCompletionsCount, (0, import_drizzle_orm.eq)(goalCompletionsCount.goalId, goals.id)).where((0, import_drizzle_orm.and)((0, import_drizzle_orm.eq)(goals.id, goalId), (0, import_drizzle_orm.eq)(goals.userId, userId))).limit(1);
   const { completionCount, desiredWeeklyFrequency } = result[0];
   const isLastCompletionFromGoal = completionCount + 1 === desiredWeeklyFrequency;
   const earnedExperience = isLastCompletionFromGoal ? 7 : 5;
@@ -200,10 +212,10 @@ async function createGoalCompletion({
   const goalCompletion = await db.transaction(async (tx) => {
     const [goalCompletion2] = await db.insert(goalCompletions).values({ goalId }).returning();
     await db.update(users).set({
-      experience: sql`
+      experience: import_drizzle_orm.sql`
       ${users.experience} + ${earnedExperience}
       `
-    }).where(eq(users.id, userId));
+    }).where((0, import_drizzle_orm.eq)(users.id, userId));
     return goalCompletion2;
   });
   return {
@@ -221,11 +233,11 @@ var createGoalCompletionRoute = async (app2) => {
         operationId: "createGoalCompletion",
         tags: ["goals"],
         description: "Complete a goal",
-        body: z3.object({
-          goalId: z3.string()
+        body: import_zod3.z.object({
+          goalId: import_zod3.z.string()
         }),
         response: {
-          201: z3.null()
+          201: import_zod3.z.null()
         }
       }
     },
@@ -242,30 +254,30 @@ var createGoalCompletionRoute = async (app2) => {
 };
 
 // src/functions/get-week-pending-goals.ts
-import dayjs2 from "dayjs";
-import { and as and2, count as count2, eq as eq2, gte as gte2, lte as lte2, sql as sql2 } from "drizzle-orm";
+var import_dayjs2 = __toESM(require("dayjs"));
+var import_drizzle_orm2 = require("drizzle-orm");
 async function getWeekPendingGoals({
   userId
 }) {
-  const firstDayOfWeek = dayjs2().startOf("week").toDate();
-  const lastDayOfWeek = dayjs2().endOf("week").toDate();
+  const firstDayOfWeek = (0, import_dayjs2.default)().startOf("week").toDate();
+  const lastDayOfWeek = (0, import_dayjs2.default)().endOf("week").toDate();
   const goalsCreatedUpToWeek = db.$with("goals_created_up_to_week").as(
     db.select({
       id: goals.id,
       title: goals.title,
       desiredWeeklyFrequency: goals.desiredWeeklyFrequency,
       createdAt: goals.createAt
-    }).from(goals).where(and2(lte2(goals.createAt, lastDayOfWeek), eq2(goals.userId, userId)))
+    }).from(goals).where((0, import_drizzle_orm2.and)((0, import_drizzle_orm2.lte)(goals.createAt, lastDayOfWeek), (0, import_drizzle_orm2.eq)(goals.userId, userId)))
   );
   const goalCompletionsCount = db.$with("goal_completions-counts").as(
     db.select({
       goalId: goalCompletions.goalId,
-      completionCount: count2(goalCompletions.id).as("completionCount")
-    }).from(goalCompletions).innerJoin(goals, eq2(goals.id, goalCompletions.goalId)).where(
-      and2(
-        gte2(goalCompletions.createAt, firstDayOfWeek),
-        lte2(goalCompletions.createAt, lastDayOfWeek),
-        eq2(goals.userId, userId)
+      completionCount: (0, import_drizzle_orm2.count)(goalCompletions.id).as("completionCount")
+    }).from(goalCompletions).innerJoin(goals, (0, import_drizzle_orm2.eq)(goals.id, goalCompletions.goalId)).where(
+      (0, import_drizzle_orm2.and)(
+        (0, import_drizzle_orm2.gte)(goalCompletions.createAt, firstDayOfWeek),
+        (0, import_drizzle_orm2.lte)(goalCompletions.createAt, lastDayOfWeek),
+        (0, import_drizzle_orm2.eq)(goals.userId, userId)
       )
     ).groupBy(goalCompletions.goalId)
   );
@@ -273,12 +285,12 @@ async function getWeekPendingGoals({
     id: goalsCreatedUpToWeek.id,
     title: goalsCreatedUpToWeek.title,
     desiredWeeklyFrequency: goalsCreatedUpToWeek.desiredWeeklyFrequency,
-    completionCount: sql2`
+    completionCount: import_drizzle_orm2.sql`
         COALESCE(${goalCompletionsCount.completionCount}, 0)
       `.mapWith(Number)
   }).from(goalsCreatedUpToWeek).leftJoin(
     goalCompletionsCount,
-    eq2(goalCompletionsCount.goalId, goalsCreatedUpToWeek.id)
+    (0, import_drizzle_orm2.eq)(goalCompletionsCount.goalId, goalsCreatedUpToWeek.id)
   );
   return {
     pendingGoals
@@ -286,7 +298,7 @@ async function getWeekPendingGoals({
 }
 
 // src/routes/get-pending-goals-router.ts
-import z4 from "zod";
+var import_zod4 = __toESM(require("zod"));
 var getWeekPendingGoalsRoute = async (app2) => {
   app2.get(
     "/pending-goals",
@@ -297,13 +309,13 @@ var getWeekPendingGoalsRoute = async (app2) => {
         tags: ["goals"],
         description: "Get pending goals",
         response: {
-          200: z4.object({
-            pendingGoals: z4.array(
-              z4.object({
-                id: z4.string(),
-                title: z4.string(),
-                desiredWeeklyFrequency: z4.number(),
-                completionCount: z4.number()
+          200: import_zod4.default.object({
+            pendingGoals: import_zod4.default.array(
+              import_zod4.default.object({
+                id: import_zod4.default.string(),
+                title: import_zod4.default.string(),
+                desiredWeeklyFrequency: import_zod4.default.number(),
+                completionCount: import_zod4.default.number()
               })
             )
           })
@@ -321,42 +333,42 @@ var getWeekPendingGoalsRoute = async (app2) => {
 };
 
 // src/functions/get-week-summary.ts
-import dayjs3 from "dayjs";
-import { and as and3, desc, eq as eq3, gte as gte3, lte as lte3, sql as sql3 } from "drizzle-orm";
+var import_dayjs3 = __toESM(require("dayjs"));
+var import_drizzle_orm3 = require("drizzle-orm");
 async function getWeekSummary({
   userId,
   weekStartsAt
 }) {
   const firstDayOfWeek = weekStartsAt;
-  const lastDayOfWeek = dayjs3(weekStartsAt).endOf("week").toDate();
+  const lastDayOfWeek = (0, import_dayjs3.default)(weekStartsAt).endOf("week").toDate();
   const goalsCreatedUpToWeek = db.$with("goals_created_up_to_week").as(
     db.select({
       id: goals.id,
       title: goals.title,
       desiredWeeklyFrequency: goals.desiredWeeklyFrequency,
       createdAt: goals.createAt
-    }).from(goals).where(and3(lte3(goals.createAt, lastDayOfWeek), eq3(goals.userId, userId)))
+    }).from(goals).where((0, import_drizzle_orm3.and)((0, import_drizzle_orm3.lte)(goals.createAt, lastDayOfWeek), (0, import_drizzle_orm3.eq)(goals.userId, userId)))
   );
   const goalsCompletedInWeek = db.$with("goal_completed_in_week").as(
     db.select({
       id: goalCompletions.id,
       title: goals.title,
       completedAt: goalCompletions.createAt,
-      completedAtDate: sql3`
+      completedAtDate: import_drizzle_orm3.sql`
           DATE(${goalCompletions.createAt})
         `.as("completedAtDate")
-    }).from(goalCompletions).innerJoin(goals, eq3(goals.id, goalCompletions.goalId)).where(
-      and3(
-        gte3(goalCompletions.createAt, firstDayOfWeek),
-        lte3(goalCompletions.createAt, lastDayOfWeek),
-        eq3(goals.userId, userId)
+    }).from(goalCompletions).innerJoin(goals, (0, import_drizzle_orm3.eq)(goals.id, goalCompletions.goalId)).where(
+      (0, import_drizzle_orm3.and)(
+        (0, import_drizzle_orm3.gte)(goalCompletions.createAt, firstDayOfWeek),
+        (0, import_drizzle_orm3.lte)(goalCompletions.createAt, lastDayOfWeek),
+        (0, import_drizzle_orm3.eq)(goals.userId, userId)
       )
-    ).orderBy(desc(goalCompletions.createAt))
+    ).orderBy((0, import_drizzle_orm3.desc)(goalCompletions.createAt))
   );
   const goalsCompletedByWeekDay = db.$with("goals_completed_by_week_day").as(
     db.select({
       completedAtDate: goalsCompletedInWeek.completedAtDate,
-      completions: sql3`
+      completions: import_drizzle_orm3.sql`
           JSON_AGG(
             JSON_BUILD_OBJECT(
               'id', ${goalsCompletedInWeek.id},
@@ -365,16 +377,16 @@ async function getWeekSummary({
             )
           )
         `.as("completions")
-    }).from(goalsCompletedInWeek).groupBy(goalsCompletedInWeek.completedAtDate).orderBy(desc(goalsCompletedInWeek.completedAtDate))
+    }).from(goalsCompletedInWeek).groupBy(goalsCompletedInWeek.completedAtDate).orderBy((0, import_drizzle_orm3.desc)(goalsCompletedInWeek.completedAtDate))
   );
   const result = await db.with(goalsCreatedUpToWeek, goalsCompletedInWeek, goalsCompletedByWeekDay).select({
-    completed: sql3`(SELECT COUNT(*) FROM ${goalsCompletedInWeek})`.mapWith(
+    completed: import_drizzle_orm3.sql`(SELECT COUNT(*) FROM ${goalsCompletedInWeek})`.mapWith(
       Number
     ),
-    total: sql3`(SELECT SUM(${goalsCreatedUpToWeek.desiredWeeklyFrequency}) FROM ${goalsCreatedUpToWeek})`.mapWith(
+    total: import_drizzle_orm3.sql`(SELECT SUM(${goalsCreatedUpToWeek.desiredWeeklyFrequency}) FROM ${goalsCreatedUpToWeek})`.mapWith(
       Number
     ),
-    goalsPerDay: sql3`
+    goalsPerDay: import_drizzle_orm3.sql`
         JSON_OBJECT_AGG(
           ${goalsCompletedByWeekDay.completedAtDate},
           ${goalsCompletedByWeekDay.completions}
@@ -387,8 +399,8 @@ async function getWeekSummary({
 }
 
 // src/routes/get-week-summary-route.ts
-import z5 from "zod";
-import dayjs4 from "dayjs";
+var import_zod5 = __toESM(require("zod"));
+var import_dayjs4 = __toESM(require("dayjs"));
 var getWeekSummaryRoute = async (app2) => {
   app2.get(
     "/summary",
@@ -398,21 +410,21 @@ var getWeekSummaryRoute = async (app2) => {
         operationId: "getWeekSummary",
         tags: ["goals"],
         description: "Get week summary goals",
-        querystring: z5.object({
-          weekStartsAt: z5.coerce.date().optional().default(dayjs4().startOf("week").toDate())
+        querystring: import_zod5.default.object({
+          weekStartsAt: import_zod5.default.coerce.date().optional().default((0, import_dayjs4.default)().startOf("week").toDate())
         }),
         response: {
-          200: z5.object({
-            summary: z5.object({
-              completed: z5.number(),
-              total: z5.number(),
-              goalsPerDay: z5.record(
-                z5.string(),
-                z5.array(
-                  z5.object({
-                    id: z5.string(),
-                    title: z5.string(),
-                    completedAt: z5.string()
+          200: import_zod5.default.object({
+            summary: import_zod5.default.object({
+              completed: import_zod5.default.number(),
+              total: import_zod5.default.number(),
+              goalsPerDay: import_zod5.default.record(
+                import_zod5.default.string(),
+                import_zod5.default.array(
+                  import_zod5.default.object({
+                    id: import_zod5.default.string(),
+                    title: import_zod5.default.string(),
+                    completedAt: import_zod5.default.string()
                   })
                 )
               )
@@ -431,15 +443,15 @@ var getWeekSummaryRoute = async (app2) => {
 };
 
 // src/http/server.ts
-import { fastifyCors } from "@fastify/cors";
-import { fastifySwagger } from "@fastify/swagger";
-import { fastifySwaggerUi } from "@fastify/swagger-ui";
+var import_cors = require("@fastify/cors");
+var import_swagger = require("@fastify/swagger");
+var import_swagger_ui = require("@fastify/swagger-ui");
 
 // src/routes/authenticate-from-github-route.ts
-import { z as z6 } from "zod";
+var import_zod6 = require("zod");
 
 // src/functions/authenticate-from-github-code.ts
-import { eq as eq4 } from "drizzle-orm";
+var import_drizzle_orm4 = require("drizzle-orm");
 
 // src/modules/github-oauth.ts
 async function getAccessTokenFromCode(code) {
@@ -468,10 +480,10 @@ async function getUserFromAccessToken(accessToken) {
 }
 
 // src/modules/auth.ts
-import { SignJWT } from "jose";
+var import_jose = require("jose");
 async function authenticateUser(userId) {
   const secret = new TextEncoder().encode(env.JWT_SECRET);
-  const token = await new SignJWT().setProtectedHeader({ alg: "HS256" }).setSubject(userId).setExpirationTime("1d").setIssuedAt().sign(secret);
+  const token = await new import_jose.SignJWT().setProtectedHeader({ alg: "HS256" }).setSubject(userId).setExpirationTime("1d").setIssuedAt().sign(secret);
   return token;
 }
 
@@ -481,7 +493,7 @@ async function authenticateFromGithubCode({
 }) {
   const accessToken = await getAccessTokenFromCode(code);
   const githubUser = await getUserFromAccessToken(accessToken);
-  const result = await db.select().from(users).where(eq4(users.externalAcountId, githubUser.id));
+  const result = await db.select().from(users).where((0, import_drizzle_orm4.eq)(users.externalAcountId, githubUser.id));
   let userId;
   const userAlreadyExist = result.length > 0;
   if (userAlreadyExist) {
@@ -508,11 +520,11 @@ var authenticateFromGithubRoute = async (app2) => {
         operationId: "authenticateFromGithub",
         tags: ["auth"],
         description: "Authenticate user from Gitub code",
-        body: z6.object({
-          code: z6.string()
+        body: import_zod6.z.object({
+          code: import_zod6.z.string()
         }),
         response: {
-          201: z6.object({ token: z6.string() })
+          201: import_zod6.z.object({ token: import_zod6.z.string() })
         }
       }
     },
@@ -525,20 +537,20 @@ var authenticateFromGithubRoute = async (app2) => {
 };
 
 // src/http/server.ts
-import fastifyJwt from "@fastify/jwt";
+var import_jwt = __toESM(require("@fastify/jwt"));
 
 // src/routes/get-profile-route.ts
-import z7 from "zod";
+var import_zod7 = __toESM(require("zod"));
 
 // src/functions/get-user.ts
-import { eq as eq5 } from "drizzle-orm";
+var import_drizzle_orm5 = require("drizzle-orm");
 async function getUser({ userId }) {
   const result = await db.select({
     id: users.id,
     name: users.name,
     email: users.email,
     avatarUrl: users.avatarUrl
-  }).from(users).where(eq5(users.id, userId));
+  }).from(users).where((0, import_drizzle_orm5.eq)(users.id, userId));
   const user = result[0];
   return {
     user
@@ -556,12 +568,12 @@ var getProfileRoute = async (app2) => {
         tags: ["user"],
         description: "Get user profile",
         response: {
-          200: z7.object({
-            profile: z7.object({
-              id: z7.string(),
-              name: z7.string().nullable(),
-              email: z7.string().nullable(),
-              avatarUrl: z7.string().url()
+          200: import_zod7.default.object({
+            profile: import_zod7.default.object({
+              id: import_zod7.default.string(),
+              name: import_zod7.default.string().nullable(),
+              email: import_zod7.default.string().nullable(),
+              avatarUrl: import_zod7.default.string().url()
             })
           })
         }
@@ -578,10 +590,10 @@ var getProfileRoute = async (app2) => {
 };
 
 // src/routes/get-user-level-and-experience-route.ts
-import z8 from "zod";
+var import_zod8 = __toESM(require("zod"));
 
 // src/functions/get-user-level-and-experience.ts
-import { eq as eq6 } from "drizzle-orm";
+var import_drizzle_orm6 = require("drizzle-orm");
 
 // src/modules/gamification.ts
 var BASE_EXPERIENCE = 20;
@@ -603,7 +615,7 @@ async function getUserLevelAndExperience({
 }) {
   const [{ experience }] = await db.select({
     experience: users.experience
-  }).from(users).where(eq6(users.id, userId));
+  }).from(users).where((0, import_drizzle_orm6.eq)(users.id, userId));
   const level = calculateLevelFromExperience(experience);
   const experienceToNextLevel = calculateExperienceForNextLevel(level);
   return {
@@ -624,10 +636,10 @@ var getUserLevelAndExperienceRoute = async (app2) => {
         tags: ["user", "gamification"],
         description: "Get user experience and level",
         response: {
-          200: z8.object({
-            experience: z8.number(),
-            level: z8.number(),
-            experienceToNextLevel: z8.number()
+          200: import_zod8.default.object({
+            experience: import_zod8.default.number(),
+            level: import_zod8.default.number(),
+            experienceToNextLevel: import_zod8.default.number()
           })
         }
       }
@@ -643,11 +655,11 @@ var getUserLevelAndExperienceRoute = async (app2) => {
 };
 
 // src/http/server.ts
-import { resolve } from "node:path";
-import { writeFile } from "node:fs/promises";
+var import_node_path = require("path");
+var import_promises = require("fs/promises");
 
 // src/routes/create-folder-route.ts
-import { z as z9 } from "zod";
+var import_zod9 = require("zod");
 
 // src/functions/create-folder.ts
 async function CreateFolder({ name, userId }) {
@@ -672,12 +684,12 @@ var CreateFoldersRoute = async (app2) => {
         operationId: "CreateFolders",
         tags: ["folder"],
         description: "Create a folder",
-        body: z9.object({
-          userId: z9.string(),
-          name: z9.string()
+        body: import_zod9.z.object({
+          userId: import_zod9.z.string(),
+          name: import_zod9.z.string()
         }),
         response: {
-          201: z9.null()
+          201: import_zod9.z.null()
         }
       }
     },
@@ -693,7 +705,7 @@ var CreateFoldersRoute = async (app2) => {
 };
 
 // src/routes/create-user-route.ts
-import { z as z10 } from "zod";
+var import_zod10 = require("zod");
 
 // src/functions/create-user.ts
 async function CreateUser({
@@ -724,14 +736,14 @@ var CreateUserRoute = async (app2) => {
         operationId: "CreateUser",
         tags: ["folder"],
         description: "Create a folder",
-        body: z10.object({
-          email: z10.string(),
-          name: z10.string(),
-          password: z10.string(),
-          avatarUrl: z10.string()
+        body: import_zod10.z.object({
+          email: import_zod10.z.string(),
+          name: import_zod10.z.string(),
+          password: import_zod10.z.string(),
+          avatarUrl: import_zod10.z.string()
         }),
         response: {
-          201: z10.null()
+          201: import_zod10.z.null()
         }
       }
     },
@@ -749,10 +761,10 @@ var CreateUserRoute = async (app2) => {
 };
 
 // src/routes/find-user-by-email-and-password-route.ts
-import z11 from "zod";
+var import_zod11 = __toESM(require("zod"));
 
 // src/functions/find-user-by-email-and-password.ts
-import { and as and4, eq as eq7 } from "drizzle-orm";
+var import_drizzle_orm7 = require("drizzle-orm");
 async function getUserByEmailAndPassword({
   email,
   password
@@ -761,7 +773,7 @@ async function getUserByEmailAndPassword({
     id: users.id,
     email: users.email,
     password: users.password
-  }).from(users).where(and4(eq7(users.email, email), eq7(users.password, password)));
+  }).from(users).where((0, import_drizzle_orm7.and)((0, import_drizzle_orm7.eq)(users.email, email), (0, import_drizzle_orm7.eq)(users.password, password)));
   const user = result[0];
   if (!user) {
     throw new Error("User not found");
@@ -780,12 +792,12 @@ var getUserByEmailAndPasswordRoute = async (app2) => {
         operationId: "getUserByEmailAndPassword",
         tags: ["user", "auth"],
         description: "Get user by email and passowrd",
-        body: z11.object({
-          email: z11.string(),
-          password: z11.string()
+        body: import_zod11.default.object({
+          email: import_zod11.default.string(),
+          password: import_zod11.default.string()
         }),
         response: {
-          201: z11.null()
+          201: import_zod11.default.null()
         }
       }
     },
@@ -798,7 +810,7 @@ var getUserByEmailAndPasswordRoute = async (app2) => {
 };
 
 // src/routes/authenticate-user-route.ts
-import z12 from "zod";
+var import_zod12 = __toESM(require("zod"));
 
 // src/functions/authenticate-user.ts
 async function authenticate({
@@ -820,12 +832,12 @@ var AuthenticateUserRoute = async (app2) => {
         operationId: "AuthenticateUserRoute",
         tags: ["user", "auth"],
         description: "Authenticate user",
-        body: z12.object({
-          email: z12.string(),
-          password: z12.string()
+        body: import_zod12.default.object({
+          email: import_zod12.default.string(),
+          password: import_zod12.default.string()
         }),
         response: {
-          201: z12.object({ token: z12.string() })
+          201: import_zod12.default.object({ token: import_zod12.default.string() })
         }
       }
     },
@@ -838,7 +850,7 @@ var AuthenticateUserRoute = async (app2) => {
 };
 
 // src/routes/create-note-router.ts
-import { z as z13 } from "zod";
+var import_zod13 = require("zod");
 
 // src/functions/create-note.ts
 async function CreateNote({
@@ -870,15 +882,15 @@ var CreateNoteRoute = async (app2) => {
         operationId: "CreateNote",
         tags: ["note"],
         description: "Create a folder",
-        body: z13.object({
-          userId: z13.string(),
-          title: z13.string(),
-          content: z13.string(),
-          tags: z13.string().optional(),
-          folderId: z13.string().optional()
+        body: import_zod13.z.object({
+          userId: import_zod13.z.string(),
+          title: import_zod13.z.string(),
+          content: import_zod13.z.string(),
+          tags: import_zod13.z.string().optional(),
+          folderId: import_zod13.z.string().optional()
         }),
         response: {
-          201: z13.null()
+          201: import_zod13.z.null()
         }
       }
     },
@@ -897,10 +909,10 @@ var CreateNoteRoute = async (app2) => {
 };
 
 // src/routes/get-notes-route.ts
-import z14 from "zod";
+var import_zod14 = __toESM(require("zod"));
 
 // src/functions/get-notes.ts
-import { eq as eq8 } from "drizzle-orm";
+var import_drizzle_orm8 = require("drizzle-orm");
 async function getNotes({ userId }) {
   const result = await db.select({
     id: notes.id,
@@ -908,7 +920,7 @@ async function getNotes({ userId }) {
     content: notes.content,
     tags: notes.tags,
     createdAt: notes.createdAt
-  }).from(notes).where(eq8(notes.userId, userId));
+  }).from(notes).where((0, import_drizzle_orm8.eq)(notes.userId, userId));
   if (!result) {
     throw new Error("Nenhuma nota cadastrada!");
   }
@@ -927,13 +939,13 @@ var getNotesRoute = async (app2) => {
         tags: ["notes"],
         description: "Get week summary notes",
         response: {
-          200: z14.array(
-            z14.object({
-              id: z14.string(),
-              title: z14.string(),
-              content: z14.string(),
-              tags: z14.string().nullable(),
-              createdAt: z14.date()
+          200: import_zod14.default.array(
+            import_zod14.default.object({
+              id: import_zod14.default.string(),
+              title: import_zod14.default.string(),
+              content: import_zod14.default.string(),
+              tags: import_zod14.default.string().nullable(),
+              createdAt: import_zod14.default.date()
             })
           )
         }
@@ -948,10 +960,10 @@ var getNotesRoute = async (app2) => {
 };
 
 // src/routes/find-notes-by-tag-route.ts
-import z15 from "zod";
+var import_zod15 = __toESM(require("zod"));
 
 // src/functions/find-note-by-tag.ts
-import { and as and5, eq as eq9, isNotNull } from "drizzle-orm";
+var import_drizzle_orm9 = require("drizzle-orm");
 async function FindNoteByTag({ tags }) {
   const result = await db.select({
     id: notes.id,
@@ -959,7 +971,7 @@ async function FindNoteByTag({ tags }) {
     content: notes.content,
     tag: notes.tags,
     createdAt: notes.createdAt
-  }).from(notes).where(and5(isNotNull(notes.tags), eq9(notes.tags, tags)));
+  }).from(notes).where((0, import_drizzle_orm9.and)((0, import_drizzle_orm9.isNotNull)(notes.tags), (0, import_drizzle_orm9.eq)(notes.tags, tags)));
   const notesWithNonNullTags = result.map((note) => ({
     ...note,
     tag: note.tag ?? ""
@@ -981,23 +993,23 @@ var findNotesByTagsRoute = async (app2) => {
         operationId: "getUserByEmailAndPassword",
         tags: ["notes", "tags"],
         description: "Get user by email and passowrd",
-        body: z15.object({
-          tags: z15.string()
+        body: import_zod15.default.object({
+          tags: import_zod15.default.string()
         }),
         response: {
-          200: z15.object({
-            note: z15.array(
-              z15.object({
-                id: z15.string(),
-                title: z15.string(),
-                content: z15.string(),
-                tag: z15.string(),
-                createdAt: z15.date()
+          200: import_zod15.default.object({
+            note: import_zod15.default.array(
+              import_zod15.default.object({
+                id: import_zod15.default.string(),
+                title: import_zod15.default.string(),
+                content: import_zod15.default.string(),
+                tag: import_zod15.default.string(),
+                createdAt: import_zod15.default.date()
               })
             )
           }),
-          404: z15.object({
-            message: z15.string()
+          404: import_zod15.default.object({
+            message: import_zod15.default.string()
           })
         }
       }
@@ -1014,10 +1026,10 @@ var findNotesByTagsRoute = async (app2) => {
 };
 
 // src/routes/find-note-by-id-route.ts
-import z16 from "zod";
+var import_zod16 = __toESM(require("zod"));
 
 // src/functions/find-note-by-id.ts
-import { eq as eq10 } from "drizzle-orm";
+var import_drizzle_orm10 = require("drizzle-orm");
 async function findNoteById({ noteId }) {
   const result = await db.select({
     id: notes.id,
@@ -1025,7 +1037,7 @@ async function findNoteById({ noteId }) {
     content: notes.content,
     tags: notes.tags,
     createdAt: notes.createdAt
-  }).from(notes).where(eq10(notes.id, noteId));
+  }).from(notes).where((0, import_drizzle_orm10.eq)(notes.id, noteId));
   const note = result[0];
   if (!note) {
     throw new Error("Nota n\xE3o encontrada!");
@@ -1044,21 +1056,21 @@ var findNotesByIdRoute = async (app2) => {
         operationId: "findNotesById",
         tags: ["notes", "tags"],
         description: "Find notes by id",
-        querystring: z16.object({
-          id: z16.string()
+        querystring: import_zod16.default.object({
+          id: import_zod16.default.string()
         }),
         response: {
-          200: z16.object({
-            note: z16.object({
-              id: z16.string(),
-              title: z16.string(),
-              content: z16.string(),
-              tags: z16.string().nullable(),
-              createdAt: z16.date()
+          200: import_zod16.default.object({
+            note: import_zod16.default.object({
+              id: import_zod16.default.string(),
+              title: import_zod16.default.string(),
+              content: import_zod16.default.string(),
+              tags: import_zod16.default.string().nullable(),
+              createdAt: import_zod16.default.date()
             })
           }),
-          404: z16.object({
-            message: z16.string()
+          404: import_zod16.default.object({
+            message: import_zod16.default.string()
           })
         }
       }
@@ -1075,10 +1087,10 @@ var findNotesByIdRoute = async (app2) => {
 };
 
 // src/routes/update-note-route.ts
-import z17 from "zod";
+var import_zod17 = __toESM(require("zod"));
 
 // src/functions/update-note-by-id.ts
-import { eq as eq11 } from "drizzle-orm";
+var import_drizzle_orm11 = require("drizzle-orm");
 async function updateNoteById({
   content,
   title,
@@ -1089,7 +1101,7 @@ async function updateNoteById({
     title,
     content,
     tags
-  }).where(eq11(notes.id, noteId)).returning();
+  }).where((0, import_drizzle_orm11.eq)(notes.id, noteId)).returning();
   console.log("Query Result:", result);
   const updatedNote = result[0];
   if (!updateNoteById) {
@@ -1110,26 +1122,26 @@ var updatedNoteRoute = async (app2) => {
         operationId: "updatedNote",
         tags: ["notes", "tags"],
         description: "updated note",
-        querystring: z17.object({
-          id: z17.string()
+        querystring: import_zod17.default.object({
+          id: import_zod17.default.string()
         }),
-        body: z17.object({
-          title: z17.string().optional(),
-          content: z17.string().optional(),
-          tags: z17.string().optional()
+        body: import_zod17.default.object({
+          title: import_zod17.default.string().optional(),
+          content: import_zod17.default.string().optional(),
+          tags: import_zod17.default.string().optional()
         }),
         response: {
-          201: z17.object({
-            updatedNote: z17.object({
-              id: z17.string(),
-              title: z17.string(),
-              content: z17.string(),
-              tags: z17.string().nullable(),
-              createdAt: z17.date()
+          201: import_zod17.default.object({
+            updatedNote: import_zod17.default.object({
+              id: import_zod17.default.string(),
+              title: import_zod17.default.string(),
+              content: import_zod17.default.string(),
+              tags: import_zod17.default.string().nullable(),
+              createdAt: import_zod17.default.date()
             })
           }),
-          404: z17.object({
-            message: z17.string()
+          404: import_zod17.default.object({
+            message: import_zod17.default.string()
           })
         }
       }
@@ -1154,12 +1166,12 @@ var updatedNoteRoute = async (app2) => {
 };
 
 // src/routes/delete-note-by-id-route.ts
-import z18 from "zod";
+var import_zod18 = __toESM(require("zod"));
 
 // src/functions/delete-note-by-id.ts
-import { eq as eq12 } from "drizzle-orm";
+var import_drizzle_orm12 = require("drizzle-orm");
 async function deleteNoteById({ noteId }) {
-  const result = await db.delete(notes).where(eq12(notes.id, noteId));
+  const result = await db.delete(notes).where((0, import_drizzle_orm12.eq)(notes.id, noteId));
   return {
     result
   };
@@ -1175,15 +1187,15 @@ var deleteNoteByIdRoute = async (app2) => {
         operationId: "deleteNoteById",
         tags: ["goals"],
         description: "Get pending goals",
-        querystring: z18.object({
-          id: z18.string()
+        querystring: import_zod18.default.object({
+          id: import_zod18.default.string()
         }),
         response: {
-          200: z18.object({
-            message: z18.string()
+          200: import_zod18.default.object({
+            message: import_zod18.default.string()
           }),
-          400: z18.object({
-            message: z18.string()
+          400: import_zod18.default.object({
+            message: import_zod18.default.string()
           })
         }
       }
@@ -1202,7 +1214,7 @@ var deleteNoteByIdRoute = async (app2) => {
 };
 
 // src/routes/create-taks-route.ts
-import { z as z19 } from "zod";
+var import_zod19 = require("zod");
 
 // src/functions/create-task.ts
 async function CreateTask({
@@ -1232,15 +1244,15 @@ var createTaskRoute = async (app2) => {
         operationId: "Create task",
         tags: ["task"],
         description: "Create a task",
-        body: z19.object({
-          userId: z19.string(),
-          title: z19.string(),
-          content: z19.string(),
-          is_completed: z19.boolean()
+        body: import_zod19.z.object({
+          userId: import_zod19.z.string(),
+          title: import_zod19.z.string(),
+          content: import_zod19.z.string(),
+          is_completed: import_zod19.z.boolean()
         }),
         response: {
-          201: z19.object({
-            message: z19.string()
+          201: import_zod19.z.object({
+            message: import_zod19.z.string()
           })
         }
       }
@@ -1259,10 +1271,10 @@ var createTaskRoute = async (app2) => {
 };
 
 // src/routes/get-task-route.ts
-import z20 from "zod";
+var import_zod20 = __toESM(require("zod"));
 
 // src/functions/get-tasks.ts
-import { eq as eq13 } from "drizzle-orm";
+var import_drizzle_orm13 = require("drizzle-orm");
 async function getTasks({ userId }) {
   const result = await db.select({
     id: tasks.id,
@@ -1270,7 +1282,7 @@ async function getTasks({ userId }) {
     content: tasks.content,
     is_completed: tasks.is_completed,
     createAt: tasks.createAt
-  }).from(tasks).where(eq13(tasks.userId, userId));
+  }).from(tasks).where((0, import_drizzle_orm13.eq)(tasks.userId, userId));
   if (!result) {
     throw new Error("Nenhuma tarefa cadastrada!");
   }
@@ -1289,13 +1301,13 @@ var getTaskRoute = async (app2) => {
         tags: ["task"],
         description: "Get tasks",
         response: {
-          200: z20.array(
-            z20.object({
-              id: z20.string(),
-              title: z20.string(),
-              content: z20.string(),
-              is_completed: z20.boolean().nullable(),
-              createAt: z20.date()
+          200: import_zod20.default.array(
+            import_zod20.default.object({
+              id: import_zod20.default.string(),
+              title: import_zod20.default.string(),
+              content: import_zod20.default.string(),
+              is_completed: import_zod20.default.boolean().nullable(),
+              createAt: import_zod20.default.date()
             })
           )
         }
@@ -1310,10 +1322,10 @@ var getTaskRoute = async (app2) => {
 };
 
 // src/routes/update-task-by-id-route.ts
-import z21 from "zod";
+var import_zod21 = __toESM(require("zod"));
 
 // src/functions/update-task-by-id.ts
-import { eq as eq14 } from "drizzle-orm";
+var import_drizzle_orm14 = require("drizzle-orm");
 async function updateTaskById({
   content,
   title,
@@ -1324,7 +1336,7 @@ async function updateTaskById({
     title,
     content,
     is_completed
-  }).where(eq14(tasks.id, taskId)).returning();
+  }).where((0, import_drizzle_orm14.eq)(tasks.id, taskId)).returning();
   const updatedTask = result[0];
   if (!updateTaskById) {
     throw new Error("Erro ao atualizar a tarefa!");
@@ -1343,26 +1355,26 @@ var updatedTaskRoute = async (app2) => {
         operationId: "updatedTask",
         tags: ["task"],
         description: "updated task",
-        querystring: z21.object({
-          id: z21.string()
+        querystring: import_zod21.default.object({
+          id: import_zod21.default.string()
         }),
-        body: z21.object({
-          title: z21.string().optional(),
-          content: z21.string().optional(),
-          is_completed: z21.boolean().optional()
+        body: import_zod21.default.object({
+          title: import_zod21.default.string().optional(),
+          content: import_zod21.default.string().optional(),
+          is_completed: import_zod21.default.boolean().optional()
         }),
         response: {
-          201: z21.object({
-            updatedTask: z21.object({
-              id: z21.string(),
-              title: z21.string(),
-              content: z21.string(),
-              is_completed: z21.boolean().nullable(),
-              createAt: z21.date()
+          201: import_zod21.default.object({
+            updatedTask: import_zod21.default.object({
+              id: import_zod21.default.string(),
+              title: import_zod21.default.string(),
+              content: import_zod21.default.string(),
+              is_completed: import_zod21.default.boolean().nullable(),
+              createAt: import_zod21.default.date()
             })
           }),
-          404: z21.object({
-            message: z21.string()
+          404: import_zod21.default.object({
+            message: import_zod21.default.string()
           })
         }
       }
@@ -1387,12 +1399,12 @@ var updatedTaskRoute = async (app2) => {
 };
 
 // src/routes/delete-task-by-id-route.ts
-import z22 from "zod";
+var import_zod22 = __toESM(require("zod"));
 
 // src/functions/delete-task-by-id.ts
-import { eq as eq15 } from "drizzle-orm";
+var import_drizzle_orm15 = require("drizzle-orm");
 async function deleteTaskById({ taskId }) {
-  const result = await db.delete(tasks).where(eq15(tasks.id, taskId));
+  const result = await db.delete(tasks).where((0, import_drizzle_orm15.eq)(tasks.id, taskId));
   return {
     result
   };
@@ -1408,15 +1420,15 @@ var deleteTaskByIdRoute = async (app2) => {
         operationId: "deleteTaskById",
         tags: ["task"],
         description: "Delete task",
-        querystring: z22.object({
-          id: z22.string()
+        querystring: import_zod22.default.object({
+          id: import_zod22.default.string()
         }),
         response: {
-          200: z22.object({
-            message: z22.string()
+          200: import_zod22.default.object({
+            message: import_zod22.default.string()
           }),
-          400: z22.object({
-            message: z22.string()
+          400: import_zod22.default.object({
+            message: import_zod22.default.string()
           })
         }
       }
@@ -1435,25 +1447,25 @@ var deleteTaskByIdRoute = async (app2) => {
 };
 
 // src/http/server.ts
-var app = fastify().withTypeProvider();
-app.register(fastifyCors, {
+var app = (0, import_fastify.default)().withTypeProvider();
+app.register(import_cors.fastifyCors, {
   origin: "*"
 });
-app.setValidatorCompiler(validatorCompiler);
-app.setSerializerCompiler(serializerCompiler);
-app.register(fastifyJwt, {
+app.setValidatorCompiler(import_fastify_type_provider_zod.validatorCompiler);
+app.setSerializerCompiler(import_fastify_type_provider_zod.serializerCompiler);
+app.register(import_jwt.default, {
   secret: env.JWT_SECRET
 });
-app.register(fastifySwagger, {
+app.register(import_swagger.fastifySwagger, {
   openapi: {
     info: {
       title: "in-orbit",
       version: "1.0.0"
     }
   },
-  transform: jsonSchemaTransform
+  transform: import_fastify_type_provider_zod.jsonSchemaTransform
 });
-app.register(fastifySwaggerUi, {
+app.register(import_swagger_ui.fastifySwaggerUi, {
   routePrefix: "/docs"
 });
 app.register(createGoalsRoute);
@@ -1484,12 +1496,11 @@ app.listen({
   console.log("Http server running \u{1F680}\u{1F680}");
 });
 if (env.NODE_ENV === "development") {
-  const specFile = resolve(__dirname, "../../swagger.json");
+  const specFile = (0, import_node_path.resolve)(__dirname, "../../swagger.json");
   app.ready().then(() => {
     const spec = JSON.stringify(app.swagger(), null, 2);
-    writeFile(specFile, spec).then(() => {
+    (0, import_promises.writeFile)(specFile, spec).then(() => {
       console.log("Swagger spec generated!");
     });
   });
 }
-//# sourceMappingURL=server.mjs.map
