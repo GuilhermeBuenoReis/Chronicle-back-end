@@ -1,5 +1,5 @@
 FROM node:20-alpine
-WORKDIR /In-orbit
+WORKDIR /In-Orbit
 COPY package*.json ./
 RUN npm install
 COPY . .
