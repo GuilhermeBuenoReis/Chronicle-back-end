@@ -7,8 +7,8 @@ export const findNotesByIdRoute: FastifyPluginAsyncZod = async app => {
   app.get(
     '/notes/:id',
     {
+      onRequest: [authenticateUserHook],
       schema: {
-        onRequest: [authenticateUserHook],
         operationId: 'findNotesById',
         tags: ['notes', 'tags'],
         description: 'Find notes by id',

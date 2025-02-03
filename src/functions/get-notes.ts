@@ -13,6 +13,7 @@ export async function getNotes({ userId }: GetNotesRequest) {
       title: notes.title,
       content: notes.content,
       tags: notes.tags,
+      folderId: notes.folder_id,
       createdAt: notes.createdAt,
     })
     .from(notes)

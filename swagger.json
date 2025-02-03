@@ -188,7 +188,8 @@
                           "type": "number"
                         },
                         "total": {
-                          "type": "number"
+                          "type": "number",
+                          "nullable": true
                         },
                         "goalsPerDay": {
                           "type": "object",
@@ -214,7 +215,8 @@
                               ],
                               "additionalProperties": false
                             }
-                          }
+                          },
+                          "nullable": true
                         }
                       },
                       "required": [
@@ -391,15 +393,11 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "userId": {
-                    "type": "string"
-                  },
                   "name": {
                     "type": "string"
                   }
                 },
                 "required": [
-                  "userId",
                   "name"
                 ],
                 "additionalProperties": false
@@ -595,9 +593,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "userId": {
-                    "type": "string"
-                  },
                   "title": {
                     "type": "string"
                   },
@@ -606,13 +601,9 @@
                   },
                   "tags": {
                     "type": "string"
-                  },
-                  "folderId": {
-                    "type": "string"
                   }
                 },
                 "required": [
-                  "userId",
                   "title",
                   "content"
                 ],
@@ -641,7 +632,7 @@
     },
     "/notes/summary": {
       "get": {
-        "operationId": "getNotesRoute",
+        "operationId": "getNotes",
         "tags": [
           "notes"
         ],
@@ -652,37 +643,51 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "title": {
-                        "type": "string"
-                      },
-                      "content": {
-                        "type": "string"
-                      },
-                      "tags": {
-                        "type": "string",
-                        "nullable": true
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "format": "date-time"
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "content": {
+                            "type": "string"
+                          },
+                          "folderId": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "tags": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "title",
+                          "content",
+                          "folderId",
+                          "tags",
+                          "createdAt"
+                        ],
+                        "additionalProperties": false
                       }
-                    },
-                    "required": [
-                      "id",
-                      "title",
-                      "content",
-                      "tags",
-                      "createdAt"
-                    ],
-                    "additionalProperties": false
-                  }
+                    }
+                  },
+                  "required": [
+                    "result"
+                  ],
+                  "additionalProperties": false
                 }
               }
             }
@@ -1078,9 +1083,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "userId": {
-                    "type": "string"
-                  },
                   "title": {
                     "type": "string"
                   },
@@ -1092,7 +1094,6 @@
                   }
                 },
                 "required": [
-                  "userId",
                   "title",
                   "content",
                   "is_completed"
@@ -1113,10 +1114,41 @@
                   "properties": {
                     "message": {
                       "type": "string"
+                    },
+                    "task": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        },
+                        "is_completed": {
+                          "type": "boolean",
+                          "nullable": true
+                        },
+                        "createAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "title",
+                        "content",
+                        "is_completed",
+                        "createAt"
+                      ],
+                      "additionalProperties": false
                     }
                   },
                   "required": [
-                    "message"
+                    "message",
+                    "task"
                   ],
                   "additionalProperties": false
                 }
@@ -1128,7 +1160,7 @@
     },
     "/task/summary": {
       "get": {
-        "operationId": "getTasksRoute",
+        "operationId": "getTasks",
         "tags": [
           "task"
         ],
@@ -1179,7 +1211,7 @@
     },
     "/task/update/{id}": {
       "put": {
-        "operationId": "updatedTask",
+        "operationId": "updatedTaskById",
         "tags": [
           "task"
         ],
@@ -1338,6 +1370,295 @@
             }
           },
           "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/folder/summary": {
+      "get": {
+        "operationId": "getFolders",
+        "tags": [
+          "folder"
+        ],
+        "description": "Get folder",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "createdAt"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "result"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notes/summary/": {
+      "get": {
+        "operationId": "getNotesWithFolder",
+        "tags": [
+          "notes"
+        ],
+        "description": "Get notes with folder",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "folder_id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "content": {
+                            "type": "string"
+                          },
+                          "folder_id": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "tags": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "title",
+                          "content",
+                          "folder_id",
+                          "tags",
+                          "createdAt"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "result"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/folder/note/create": {
+      "post": {
+        "operationId": "CreateNoteByFolder",
+        "tags": [
+          "note",
+          "folder"
+        ],
+        "description": "Create note by folder",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "content"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "folderId",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "enum": [
+                    "null"
+                  ],
+                  "nullable": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/task/update/": {
+      "put": {
+        "operationId": "updatedCheckboxFromTask",
+        "tags": [
+          "task"
+        ],
+        "description": "updated task",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "is_completed": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "updatedTask": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        },
+                        "is_completed": {
+                          "type": "boolean",
+                          "nullable": true
+                        },
+                        "createAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "title",
+                        "content",
+                        "is_completed",
+                        "createAt"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "updatedTask"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "404": {
             "description": "Default Response",
             "content": {
               "application/json": {

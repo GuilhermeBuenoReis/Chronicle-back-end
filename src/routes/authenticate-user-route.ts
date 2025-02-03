@@ -1,6 +1,5 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import z from 'zod';
-import { getUserByEmailAndPassword } from '../functions/find-user-by-email-and-password';
 import { authenticate } from '../functions/authenticate-user';
 
 export const AuthenticateUserRoute: FastifyPluginAsyncZod = async app => {

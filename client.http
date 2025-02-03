@@ -27,9 +27,12 @@ POST http://localhost:3333/folder
 content-type: application/json
 
 {
-  "name": "pasta 1",
-  "userId": "lfd6hs0ecld3yitw6kdmo01i"
+  "name": "pasta 2",
+  "userId": "n6u53804o7fjhg08tit8csc1"
 }
+
+### Get Folder
+GET http://localhost:3333/folder/summary
 
 ### Get profile 
 GET http://localhost:3333/profile
@@ -60,10 +63,11 @@ POST http://localhost:3333/note
 content-type: application/json
 
 {
-  "title": "Uma nota nova",
+  "title": "Nota teste",
   "userId": "n6u53804o7fjhg08tit8csc1",
+  "folder_id": "tncao1vtw5xwz1zx4x4noqlt",
   "tags": "nota 2",
-  "content": "Apenas uma nota nova"
+  "content": "SEI LÁ, JA PERDI AS CONTAS"
 }
 
 ### Get notes 
@@ -76,6 +80,9 @@ content-type: application/json
 {
   "tags": "nota 3"
 }
+
+### Get notes with Folder
+GET http://localhost:3333/notes/summary/?userId=n6u53804o7fjhg08tit8csc1&folder_id=tncao1vtw5xwz1zx4x4noqlt
 
 ### Find note by id
 GET http://localhost:3333/notes/?id=es1log90f348n7ie877apjbv

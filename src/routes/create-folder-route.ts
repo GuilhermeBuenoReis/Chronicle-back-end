@@ -7,13 +7,12 @@ export const CreateFoldersRoute: FastifyPluginAsyncZod = async app => {
   app.post(
     '/folder',
     {
+      onRequest: [authenticateUserHook],
       schema: {
-        onRequest: [authenticateUserHook],
         operationId: 'CreateFolders',
         tags: ['folder'],
         description: 'Create a folder',
         body: z.object({
-          userId: z.string(),
           name: z.string(),
         }),
         response: {
@@ -22,8 +21,8 @@ export const CreateFoldersRoute: FastifyPluginAsyncZod = async app => {
       },
     },
     async (request, reply) => {
-      // const userId = request.user.sub;
-      const { name, userId } = request.body;
+      const userId = request.user.sub;
+      const { name } = request.body;
 
       await CreateFolder({
         userId,

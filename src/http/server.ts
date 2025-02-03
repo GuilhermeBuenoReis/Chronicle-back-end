@@ -33,8 +33,13 @@ import { deleteNoteByIdRoute } from '../routes/delete-note-by-id-route';
 import { createTaskRoute } from '../routes/create-taks-route';
 import { getTaskRoute } from '../routes/get-task-route';
 import { updateTaskById } from '../functions/update-task-by-id';
-import { updatedTaskRoute } from '../routes/update-task-by-id-route';
+import { updatedTaskByIdRoute } from '../routes/update-task-by-id-route';
 import { deleteTaskByIdRoute } from '../routes/delete-task-by-id-route';
+import { getFoldersRoute } from '../routes/get-folders';
+import { getNotesWithFolderRoute } from '../routes/get-notes-with-folder-route';
+import { CreateNoteByFolderRoute } from '../routes/create-note-by-folder';
+import { updateCheckboxFromTask } from '../functions/update-checkbox-from-task';
+import { updatedCheckboxFromTaskRoute } from '../routes/update-checkbox-from-task-route';
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -82,8 +87,12 @@ app.register(updatedNoteRoute);
 app.register(deleteNoteByIdRoute);
 app.register(createTaskRoute);
 app.register(getTaskRoute);
-app.register(updatedTaskRoute);
+app.register(updatedTaskByIdRoute);
 app.register(deleteTaskByIdRoute);
+app.register(getFoldersRoute);
+app.register(getNotesWithFolderRoute);
+app.register(CreateNoteByFolderRoute);
+app.register(updatedCheckboxFromTaskRoute);
 
 app
   .listen({

@@ -1,26 +1,29 @@
 import { db } from '../db';
 import { notes } from '../db/schema';
 
-interface CreateNoteRequest {
+interface CreateNoteByFolderRequest {
   title: string;
   content: string;
   tags?: string | null;
+  folderId: string;
   userId: string;
 }
 
-export async function CreateNote({
-  userId,
+export async function createNoteByFolder({
+  folderId,
   content,
   title,
+  userId,
   tags,
-}: CreateNoteRequest) {
+}: CreateNoteByFolderRequest) {
   const result = await db
     .insert(notes)
     .values({
-      title,
       content,
+      title,
       userId,
       tags,
+      folder_id: folderId,
     })
     .returning();
 

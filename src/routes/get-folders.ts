@@ -1,26 +1,23 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import z from 'zod';
-import { getNotes } from '../functions/get-notes';
 import { authenticateUserHook } from '../http/hooks/authenticate-user';
+import { getFolder } from '../functions/get-folders';
 
-export const getNotesRoute: FastifyPluginAsyncZod = async app => {
+export const getFoldersRoute: FastifyPluginAsyncZod = async app => {
   app.get(
-    '/notes/summary',
+    '/folder/summary',
     {
       onRequest: [authenticateUserHook],
       schema: {
-        operationId: 'getNotes',
-        tags: ['notes'],
-        description: 'Get week summary notes',
+        operationId: 'getFolders',
+        tags: ['folder'],
+        description: 'Get folder',
         response: {
           200: z.object({
             result: z.array(
               z.object({
                 id: z.string(),
-                title: z.string(),
-                content: z.string(),
-                folderId: z.string().nullable(),
-                tags: z.string().nullable(),
+                name: z.string(),
                 createdAt: z.date(),
               })
             ),
@@ -30,8 +27,7 @@ export const getNotesRoute: FastifyPluginAsyncZod = async app => {
     },
     async (request, reply) => {
       const userId = request.user.sub;
-      console.log(userId);
-      const { result } = await getNotes({ userId });
+      const { result } = await getFolder({ userId });
 
       return reply.status(200).send({ result });
     }

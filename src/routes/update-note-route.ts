@@ -7,8 +7,8 @@ export const updatedNoteRoute: FastifyPluginAsyncZod = async app => {
   app.put(
     '/notes/update/:id',
     {
+      onRequest: [authenticateUserHook],
       schema: {
-        onRequest: [authenticateUserHook],
         operationId: 'updatedNote',
         tags: ['notes'],
         description: 'updated note',

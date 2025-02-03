@@ -7,9 +7,9 @@ export const getTaskRoute: FastifyPluginAsyncZod = async app => {
   app.get(
     '/task/summary',
     {
+      onRequest: [authenticateUserHook],
       schema: {
-        onRequest: [authenticateUserHook],
-        operationId: 'getTasksRoute',
+        operationId: 'getTasks',
         tags: ['task'],
         description: 'Get tasks',
         response: {
@@ -26,7 +26,7 @@ export const getTaskRoute: FastifyPluginAsyncZod = async app => {
       },
     },
     async (request, reply) => {
-      const userId = 'n6u53804o7fjhg08tit8csc1';
+      const userId = request.user.sub;
       const { result } = await getTasks({ userId });
 
       return reply.status(200).send(result);
