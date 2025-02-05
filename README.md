@@ -2,25 +2,26 @@
 
 **Versão 1.0.0**
 
-O projeto **Chronicle** é uma API de alta performance desenvolvida com **Fastify**, **TypeScript** e **Drizzle ORM**, focada em segurança, escalabilidade e boas práticas.
+O projeto **NLW Pocket** é uma API de alta performance desenvolvida com **Fastify**, **TypeScript** e **Drizzle ORM**, focada em segurança, escalabilidade e boas práticas.
 
 ---
 
-## 📋 **Scripts Disponíveis**
+## 👋 **Scripts Disponíveis**
 
-| Comando               | Descrição                                                                                       |
-| --------------------- | ----------------------------------------------------------------------------------------------- |
-| `npm run dev`         | Inicia o servidor em modo de desenvolvimento.                                                  |
-| `npm run seed`        | Popula o banco de dados com dados iniciais (seed).                                             |
-| `npm run test`        | Executa os testes unitários com **Vitest**.                                                    |
-| `npm run test:watch`  | Roda os testes em modo "watch" para desenvolvimento contínuo.                                  |
-| `npm run db:migrate:test` | Realiza as migrações no banco de dados de teste.                                          |
+| Comando                   | Descrição                                                     |
+| ------------------------- | ------------------------------------------------------------- |
+| `npm run dev`             | Inicia o servidor em modo de desenvolvimento.                 |
+| `npm run seed`            | Popula o banco de dados com dados iniciais (seed).            |
+| `npm run test`            | Executa os testes unitários com **Vitest**.                   |
+| `npm run test:watch`      | Roda os testes em modo "watch" para desenvolvimento contínuo. |
+| `npm run db:migrate:test` | Realiza as migrações no banco de dados de teste.              |
 
 ---
 
 ## 🛠️ **Tecnologias Utilizadas**
 
 ### 🔧 **Dependências Principais**
+
 - **[Fastify](https://fastify.dev/)**: Framework web rápido e otimizado.
 - **[Drizzle ORM](https://orm.drizzle.team/)**: ORM simples e eficiente para TypeScript.
 - **Postgres**: Banco de dados SQL robusto e escalável.
@@ -37,23 +38,26 @@ O projeto **Chronicle** é uma API de alta performance desenvolvida com **Fastif
 A API oferece um conjunto de funcionalidades essenciais para gerenciamento de tarefas e organização de informações:
 
 ### 📌 **CRUDs Disponíveis**
+
 - **Usuários**: Cadastro, login e gerenciamento de perfis.
 - **Tarefas**: Criação, leitura, atualização e exclusão de tarefas.
 - **Notas**: Registro e organização de anotações.
 - **Pastas**: Agrupamento de notas e tarefas por categoria.
 
 ### 🔐 **Autenticação e Segurança**
+
 - **Autenticação via JWT**.
 - **Controle de acesso baseado em usuário**.
 - **Hashing seguro de senhas**.
 
 ### 🧪 **Testes Automatizados**
+
 - Testes unitários utilizando **Vitest**.
 - Cobertura de testes para regras de negócio e endpoints principais.
 
 ---
 
-## 📦 **Ferramentas de Desenvolvimento**
+## 📚 **Ferramentas de Desenvolvimento**
 
 - **TypeScript**: Superset do JavaScript com tipagem estática.
 - **Vitest**: Framework de testes unitários rápido e simples.
@@ -63,7 +67,7 @@ A API oferece um conjunto de funcionalidades essenciais para gerenciamento de ta
 
 ---
 
-## 🔐 **Configuração das Variáveis de Ambiente**
+## 🔒 **Configuração das Variáveis de Ambiente**
 
 Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
 
@@ -75,7 +79,7 @@ GITHUB_CLIENT_SECRET= # Segredo do cliente GitHub
 JWT_SECRET= # Chave secreta para JWT
 ```
 
-### **Exemplo de `.env`**
+### ✨**Exemplo de `.env`**
 
 ```plaintext
 NODE_ENV=development
@@ -88,30 +92,36 @@ JWT_SECRET=uma_chave_muito_segura
 ## 🚀 **Como Rodar o Projeto**
 
 1. **Clone o repositório**:
+
    ```bash
-   git clone https://github.com/GuilhermeBuenoReis/In-Orbit.git
-   cd In-orbit
+   git clone https://github.com/GuilhermeBuenoReis/Chronicle-back-end.git
+   cd Chronicle-back-end
    ```
 
 2. **Instale as dependências**:
+
    ```bash
    npm install
    ```
 
 3. **Configure as variáveis de ambiente**:
+
    - Crie o arquivo `.env` conforme o exemplo acima.
 
 4. **Execute as migrações do banco de dados**:
+
    ```bash
    npm run db:migrate:test
    ```
 
 5. **Rode o servidor em desenvolvimento**:
+
    ```bash
    npm run dev
    ```
 
 6. **Teste a aplicação** (opcional):
+
    ```bash
    npm run test
    ```
@@ -146,11 +156,10 @@ npm run test:watch
 
 ## 📧 **Contato**
 
-Caso tenha dúvidas ou sugestões, entre em contato pelo e-mail:  
-**guilhermebuenoreis@gmail.com**
+Caso tenha dúvidas ou sugestões, entre em contato pelo e-mail:\
+**[guilhermebuenoreis@gmail.com](mailto:guilhermebuenoreis@gmail.com)**
 
 ---
 
 **Feito por Guilherme Bueno**
-
 
