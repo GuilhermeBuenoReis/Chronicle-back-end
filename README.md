@@ -1,8 +1,8 @@
-# 🚀 **In.orbit**
+# 🚀 **Chronicle**
 
 **Versão 1.0.0**
 
-O projeto **NLW Pocket** é uma API de alta performance desenvolvida com **Fastify**, **TypeScript** e **Drizzle ORM**, focada em segurança, escalabilidade e boas práticas.
+O projeto **Chronicle** é uma API de alta performance desenvolvida com **Fastify**, **TypeScript** e **Drizzle ORM**, focada em segurança, escalabilidade e boas práticas.
 
 ---
 
@@ -29,6 +29,27 @@ O projeto **NLW Pocket** é uma API de alta performance desenvolvida com **Fasti
 - **JWT (JSON Web Token)**: Autenticação segura com **@fastify/jwt** e **jose**.
 - **CUID2**: Geração de identificadores únicos.
 - **Swagger UI**: Documentação automática da API com **@fastify/swagger**.
+
+---
+
+## 🔥 **Funcionalidades**
+
+A API oferece um conjunto de funcionalidades essenciais para gerenciamento de tarefas e organização de informações:
+
+### 📌 **CRUDs Disponíveis**
+- **Usuários**: Cadastro, login e gerenciamento de perfis.
+- **Tarefas**: Criação, leitura, atualização e exclusão de tarefas.
+- **Notas**: Registro e organização de anotações.
+- **Pastas**: Agrupamento de notas e tarefas por categoria.
+
+### 🔐 **Autenticação e Segurança**
+- **Autenticação via JWT**.
+- **Controle de acesso baseado em usuário**.
+- **Hashing seguro de senhas**.
+
+### 🧪 **Testes Automatizados**
+- Testes unitários utilizando **Vitest**.
+- Cobertura de testes para regras de negócio e endpoints principais.
 
 ---
 
@@ -130,6 +151,6 @@ Caso tenha dúvidas ou sugestões, entre em contato pelo e-mail:
 
 ---
 
-**Feito por Guilherme Bueno**  
+**Feito por Guilherme Bueno**
 
---- 
+
